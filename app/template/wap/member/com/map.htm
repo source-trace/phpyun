@@ -1,0 +1,137 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<script src="{yun:}$wap_style{/yun}/js/part.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+<script src="{yun:}$wap_style{/yun}/js/mobiscroll/mobiscroll_002.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$wap_style{/yun}/js/mobiscroll/mobiscroll.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$wap_style{/yun}/js/mobiscroll/mobiscroll_003.js?v={yun:}$config.cachecode{/yun}"></script>
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/mobiscroll/css/animate.min.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/mobiscroll/css/mobiscroll.css?v={yun:}$config.cachecode{/yun}" type="text/css">  
+<script type="text/javascript">
+var weburl='{yun:}$config_wapdomain{/yun}'; 
+
+</script>
+<section class="wap_member">
+  <div class="wap_member_comp_h1" style="position:relative"><span>企业地图</span></div>
+  
+  <div class="yun_wap_addresume_box">
+    <form action="" method="post">
+        <div class="yun_wap_mapset">
+        <div class=""> 详细地址 <span class="resume-cont_wate_bj">*</span> <span class="yun_wap_mapset_ts">( 输入地址点击搜索即可获得相应位置 )</span></div>
+       
+      </div> <div class="yun_wap_mapsetadd">
+            <input type="text" name="address" id='address' value="{yun:}$row.address{/yun}"  placeholder="请填写详细地址" class="yun_wap_mapset_text">
+            <input type="button" value="搜索" onclick="localsearch('全国');" class="yun_wap_mapsetadd_bth">
+        </div>
+       <div class="yun_wap_mapset">
+        <div class=""> 设置地图 <span class="resume-cont_wate_bj">*</span> <span class="yun_wap_mapset_ts">( 在地图上点击所在位置即可 )</span></div>
+        <div class="yun_wap_mapset_mapbox">
+          <div id="map_container" style="width:100%;height:200px; left:0;"></div>
+          <div class="yun_wap_mapset_mapbox_wz">
+          x轴：<input name="xvalue" id="map_x" type="text" value="{yun:}$row.x{/yun}" readonly="readonly"class="yun_wap_mapset_text">
+          </div>
+          <div class="yun_wap_mapset_mapbox_wz">
+          y轴：<input name="yvalue" id="map_y" type="text" value="{yun:}$row.y{/yun}" readonly="readonly"class="yun_wap_mapset_text">
+          </div>
+        </div>
+      </div>
+		<div class="yun_wap_mapset_mapbox_bth" style="background: transparent; border: none;">
+        <input type="submit" name="submit" value="提交操作" class="reinputText2">
+		</div>
+   
+      </form>
+    </div> 
+</section>
+</div>
+
+<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.config.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/ueditor/ueditor.all.min.js?v={yun:}$config.cachecode{/yun}"></script> 
+<script type="text/javascript" src="{yun:}$config.mapurl{/yun}"></script> 
+<script type="text/javascript" src="{yun:}$config.sy_weburl{/yun}/js/map.js?v={yun:}$config.cachecode{/yun}"></script>
+<script>
+	var map=new BMap.Map("map_container");
+	map.centerAndZoom(new BMap.Point(116.404, 39.915), 12);
+	//setLocation('map_container',116.404,39.915,"map_x","map_y");
+	$(document).ready(function() {
+		{yun:}if ($row.x=="" || $row.y=="") && $row.address!=""{/yun}
+			$("#address").val("{yun:}$row.address{/yun}");
+			localsearch('{yun:}if $city_name[$row.cityid]{/yun}{yun:}$city_name[$row.cityid]{/yun}{yun:}else{/yun}全国{yun:}/if{/yun}');
+		{yun:}elseif $row.x!="" && $row.y!=""{/yun}
+			setLocation('map_container',{yun:}$row.x{/yun},{yun:}$row.y{/yun},"map_x","map_y");
+		{yun:}else{/yun}
+			var geolocation = new BMap.Geolocation();
+			geolocation.getCurrentPosition(function (r) {
+			
+	        if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+	            location_r = r;
+				setLocation('map_container',r.point.lng,r.point.lat,"map_x","map_y"); 
+	        }
+	    }, { enableHighAccuracy: true });
+		{yun:}/if{/yun}
+	});
+    
+    /*var local ;
+	function getLocalResult(){
+		var address=$.trim($("#address").val());
+		var points=local.getResults();
+			var lngLat=points.getPoi(0).point;
+			setLocation('map_container',lngLat.lng,lngLat.lat,"map_x","map_y");
+			document.getElementById("map_x").value=lngLat.lng;
+			document.getElementById("map_y").value=lngLat.lat;
+	}
+	function localsearch(city){
+		if($("#address").val()==""){
+			layermsg('请输入地址！', 2);return false;
+		}
+		local = new BMap.LocalSearch(city, {
+		renderOptions: {
+			map: map,
+			panel : "r-result",
+			autoViewport: true,
+			selectFirstResult: false
+		  },onSearchComplete : getLocalResult
+		});
+		map.centerAndZoom(new BMap.Point(116.404, 39.915), 4);
+		local.search($("#address").val());
+	}*/
+    	function localsearch(city){
+			if($("#address").val()==""){
+				layer.msg('请输入地址！', 2, 8);return false;
+			}
+			// 创建地址解析器实例
+			var myGeo = new BMap.Geocoder();
+			// 将地址解析结果显示在地图上,并调整地图视野
+			myGeo.getPoint($("#address").val().replace(/\s+/g,""), function(point){
+				
+				map.centerAndZoom(point, 16);
+				map.addOverlay(new BMap.Marker(point));
+				
+			}, "北京市");
+		}
+	function setLocation(id,x,y,xid,yid){
+		
+		var rating,map_control_type,map_control_anchor;
+		if(!x && !y){x='116.404';y='39.915';}
+		var point = new BMap.Point(x,y);
+		var marker = new BMap.Marker(point);
+		var opts = {type:BMAP_NAVIGATION_CONTROL_LARGE}
+		map.enableScrollWheelZoom(true);
+		map.addControl(new BMap.NavigationControl(opts));
+		map.centerAndZoom(point, 15);
+		map.addOverlay(marker);
+		map.addEventListener("click",function(e){
+		   var info = new BMap.InfoWindow('', {width: 260});
+			var projection = this.getMapType().getProjection();
+			var lngLat = e.point;
+			document.getElementById(xid).value=lngLat.lng;
+			document.getElementById(yid).value=lngLat.lat;
+			map.clearOverlays();
+			var point = new BMap.Point(lngLat.lng,lngLat.lat);
+			var marker = new BMap.Marker(point);
+			map.addOverlay(marker);
+		});
+	}  
+	
+var ue = UE.getEditor('description',{
+	toolbars: false,elementPathEnabled:false,wordCount:false,autoHeightEnabled:false
+});  
+</script>
+{yun:}include file="$wapstyle/footer.htm"{/yun} 

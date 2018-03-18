@@ -1,0 +1,9 @@
+<?php 
+$data=array('0'=>array('link_name'=>'PHP人才网','link_url'=>'http://www.phpyun.com','link_src'=>'http://www.job.com/2')
+,'1'=>array('link_name'=>'浙江人才网','link_url'=>'http://www.phpyun.com','link_src'=>'http://www.job.com/')
+,'2'=>array('link_name'=>'九江人才网','link_url'=>'http://www.phpyun.com','link_src'=>'http://www.job.com/')
+,'3'=>array('link_name'=>'海员招聘网','link_url'=>'http://www.phpyun.com','link_src'=>'http://www.job.com/')
+,'4'=>array('link_name'=>'九江人才网','link_url'=>'http://www.phpyun.com','link_src'=>'http://www.job.com/')
+)
+; 
+?>

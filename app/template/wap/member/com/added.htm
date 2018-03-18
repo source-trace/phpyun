@@ -1,0 +1,227 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun} 
+<section class="wap_member">
+	<div class="wap_member_rReceive">
+		<div class="wap_member_rReceive_t">尊敬的企业用户：</div>
+		<div class="">您当前是：<font color="#f60">{yun:}$statis.rating_name{/yun}</font></div> 
+		<div class="">服务期限为：
+			{yun:}if $statis.rating!='0'{/yun}
+				{yun:}$statis.vip_stime|date_format:'%Y-%m-%d'{/yun} 
+				- 
+				{yun:}if $statis.vip_etime==0{/yun}
+					永久
+				{yun:}else{/yun}
+					{yun:}$statis.vip_etime|date_format:'%Y-%m-%d'{/yun}
+				{yun:}/if{/yun}
+			{yun:}else{/yun}
+				已到期
+			{yun:}/if{/yun}
+		</div>
+	</div>
+	<ul class="member_ms_tc">
+		{yun:}if $config.com_vip_type==2{/yun}
+			<li><a href="index.php?c=rating">套餐会员</a></li>
+		{yun:}/if{/yun}
+		
+		{yun:}if $config.com_vip_type==1{/yun}
+			<li><a href="index.php?c=time">时间会员</a>	</li>
+		{yun:}/if{/yun}
+		
+		{yun:}if $config.com_vip_type==0{/yun}
+			<li><a href="index.php?c=rating">套餐会员</a></li>
+			<li><a href="index.php?c=time">时间会员</a></li>
+		{yun:}/if{/yun}
+		<li class="member_ms_tc_cur"><a href="index.php?c=added">增值包</a></li>
+	</ul>
+
+	<div class="wap_member_added_box">
+		<table width="100%">
+			<tr>
+				<td valign="top">
+					<ul class="wap_member_added_box_left">
+						{yun:}foreach from=$rows item=v key=key{/yun}
+							<li {yun:}if $smarty.get.id==$v.id||($smarty.get.id==''&&$key < 1){/yun} class="member_ms_added_cur"{yun:}/if{/yun}>
+								<a href="index.php?c=added&id={yun:}$v.id{/yun}">{yun:}$v.name{/yun}</a>
+								<i class="Value_added_bg"></i>
+							</li>
+						{yun:}/foreach{/yun} 
+					</ul>
+				</td>
+				
+				<td valign="top">
+					<div class="wap_member_added_cont">
+						{yun:}if $info{/yun}
+							{yun:}foreach from=$info item=v{/yun}
+								<div class="added_list">
+									<label>
+										<input type="radio" name="service_package" value="{yun:}$v.id{/yun}" onclick="toChange()" class="wap_member_added_radio"/>
+										套餐价：
+											<em class="">{yun:}$v.service_price{/yun} </em>元
+										会员价：
+											<em class="com_dt_rage">
+												{yun:}if $discount.service_discount{/yun} 
+													{yun:}$v.service_price*$discount.service_discount*0.01{/yun}
+												{yun:}else{/yun}
+													{yun:}$v.service_price{/yun}
+												{yun:}/if{/yun} 
+											</em>元 
+										<div> 
+											套餐内容：
+											{yun:}if $v.resume{/yun}下载简历<i class="com_dt_rage">{yun:}$v.resume{/yun}</i>{yun:}/if{/yun}
+											{yun:}if $v.interview{/yun}+ 邀请面试<i class="com_dt_rage">{yun:}$v.interview{/yun}</i>{yun:}/if{/yun}
+											{yun:}if $v.job_num{/yun}+ 发布职位<i class="com_dt_rage">{yun:}$v.job_num{/yun}</i>{yun:}/if{/yun}
+											{yun:}if $v.breakjob_num{/yun}+ 刷新职位<i class="com_dt_rage">{yun:}$v.breakjob_num{/yun}</i>{yun:}/if{/yun}
+											
+											{yun:}if $v.part_num{/yun}+ 发布兼职<i class="com_dt_rage">{yun:}$v.part_num{/yun}</i>{yun:}/if{/yun}
+											{yun:}if $v.breakpart_num{/yun}+ 刷新兼职<i class="com_dt_rage">{yun:}$v.breakpart_num{/yun}</i>{yun:}/if{/yun}
+											
+										</div>
+									</label>
+								</div>
+							{yun:}/foreach{/yun} 
+
+							<div class="wap_member_added_money">应付金额：<span id="price" class="wap_member_added_money_n">0</span> 元</div>
+							
+							{yun:}if $config.com_integral_online==1{/yun}
+								<div class="wap_member_added_money">
+									抵扣{yun:}$config.integral_pricename{/yun}：
+									<input type="text" id="dkjf" onkeyup="checkNum('{yun:}$statis.integral{/yun}','{yun:}$config.integral_proportion{/yun}');" oninput="myFunction(this)" style="width:80px;">
+								</div>
+								<div class="wap_member_added_money">账户{yun:}$config.integral_pricename{/yun}：{yun:}$statis.integral{/yun}（1元 = {yun:}$config.integral_proportion{/yun}{yun:}$config.integral_pricename{/yun}）</div>
+							{yun:}/if{/yun}
+
+							<div class="wap_member_added_money dkh_div" style="display:none">
+								抵后金额：<span id="price_dk" class="wap_member_added_money_n">0</span> 元
+							</div>
+
+							<form action="index.php?c=pay" method="post">
+								<input type="hidden" name="usertype" value="service"/>
+								<input type="hidden" id="comserviceid" name="id" value=""/>
+
+								<input type="hidden" value="" id="dkjf2" name="dkjf"/>
+								<input type="hidden" value="" id="dkprice" name="dkprice"/>
+								<div id="zf_div">
+									<input type='submit' value='立即购买' class="wap_member_added_bth">
+								</div>
+								<div id="zf_div2" style="display:none">
+									<input type="button" onClick="qrzf()" value='立即购买' class="wap_member_added_bth">
+								</div>
+							</form>
+
+						{yun:}else{/yun}
+							<div class="wap_member_no">没有增值包服务</div>
+						{yun:}/if{/yun}
+					</div>
+				</td>
+			</tr>
+		</table>	
+	</div>
+</section>
+<script>
+//加减乘除
+function accAdd(arg1,arg2){ 
+	var r1,r2,m; 
+	try{r1=arg1.toString().split(".")[1].length}catch(e){r1=0} 
+	try{r2=arg2.toString().split(".")[1].length}catch(e){r2=0} 
+	m=Math.pow(10,Math.max(r1,r2)) 
+	return (arg1*m+arg2*m)/m 
+} 
+function accSub(arg1,arg2){ 
+	return accAdd(arg1,-arg2); 
+} 
+function accMul(arg1, arg2) {
+	var m = 0, s1 = arg1.toString(), s2 = arg2.toString();
+	try { m += s1.split(".")[1].length } catch (e) { }
+	try { m += s2.split(".")[1].length } catch (e) { }
+	return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m)
+}
+function accDiv(arg1,arg2){    
+	var t1=0,t2=0,r1,r2;    
+	try{t1=arg1.toString().split(".")[1].length}catch(e){}    
+	try{t2=arg2.toString().split(".")[1].length}catch(e){}    
+	with(Math){        
+		r1=Number(arg1.toString().replace(".",""));        
+		r2=Number(arg2.toString().replace(".",""));        
+		return (r1/r2)*pow(10,t2-t1);    
+	}
+}
+
+function myFunction(_this) {
+    _this.value = _this.value.replace(/[^0-9]/g, '');
+}
+
+function toChange(){
+	var obj  = document.getElementsByName('service_package');
+	$("#dkjf").val('');
+	$(".dkh_div").hide();
+    for(var i=0;i<obj.length;i++){
+        if(obj[i].checked==true){
+        	{yun:}foreach from=$info item=v{/yun}
+            if(obj[i].value=='{yun:}$v.id{/yun}'){
+            	document.getElementById('price').innerHTML='{yun:}if $discount.service_discount{/yun}{yun:}$v.service_price*$discount.service_discount*0.01{/yun}{yun:}else{/yun}{yun:}$v.service_price{/yun}{yun:}/if{/yun}';
+            	document.getElementById('comserviceid').value='{yun:}$v.id{/yun}';
+            }
+            {yun:}/foreach{/yun}
+        }
+    }
+}
+function checkNum(integral,integral_pro){
+	var dkjf = $("#dkjf").val();
+ 	if(dkjf){
+		$(".dkh_div").show();
+	}else{
+		$(".dkh_div").hide();
+	} 
+	var price = $("#price").text();
+	var need_jifen = accMul(price, integral_pro);
+
+	if(parseInt(integral) >= parseInt(need_jifen)){
+		if(parseInt(dkjf) > parseInt(need_jifen)){
+			$("#dkjf").val(need_jifen);
+			var dkjfh = accSub(price , accDiv(need_jifen,integral_pro));
+		}else{
+			var dkjfh = accSub(price, accDiv(dkjf,integral_pro));
+		}	
+ 	}else{
+		if(parseInt(dkjf) > parseInt(integral)){
+			$("#dkjf").val(integral);
+			var dkjfh = accSub(price , accDiv(integral,integral_pro));
+		}else{
+			var dkjfh = accSub(price, accDiv(dkjf,integral_pro));
+ 		}
+ 	}
+ 		if(dkjfh<=0){
+			$("#price_dk").html(0);
+			$("#zf_div").hide();
+			$("#zf_div2").show();
+		}else{
+			$("#price_dk").html(dkjfh);
+			$("#dkjf2").val(dkjf);
+			$("#dkprice").val(dkjfh);
+			$("#zf_div").show();
+			$("#zf_div2").hide();
+		}
+
+}
+
+function qrzf(){
+
+	layer_load('执行中，请稍候...');
+ 
+	var tcid = $("#comserviceid").val();
+	
+	var price = $("#price").text();//选中套餐后所需要的金额
+
+ 	var url = "index.php?c=dkzf";
+ 	
+	$.post("index.php?c=dkzf",{tcid:tcid,price:price},function(data){
+		layer.closeAll();
+		var data=eval('('+data+')');
+		if(data.error=='0'){ //成功
+			layermsg(data.msg,2,function(){location.href="index.php?c=com";});return false;
+		}else{
+			layermsg(data.msg,2,function(){location.reload();});return false;
+		}
+	});
+}
+</script>
+{yun:}include file="$wapstyle/footer.htm"{/yun} 

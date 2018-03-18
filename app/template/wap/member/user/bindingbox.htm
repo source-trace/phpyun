@@ -1,0 +1,65 @@
+{yun:}include file="$wapstyle/member/header.htm"{/yun} 
+<script src="{yun:}$wap_style{/yun}/js/binding.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<section class="wap_member">
+
+
+    {yun:}if $smarty.get.type=="email"{/yun}
+
+    <div class="wap_member_comp_h1"><span>绑定邮箱</span></div>
+    <div class="pmail_hint">
+		修改后的邮箱将作为新的登录账号
+	</div>
+	 <div class="bingdingbox">
+		<ul>
+			<li>
+			<span class="bingdingbox_name"><i>*</i> 邮&nbsp;&nbsp; 箱</span>
+			<input type="text" class="bingdingbox_text" name="email" id="emailval" value="{yun:}$member.email{/yun}">
+			</li>
+		<li><span class="bingdingbox_name"><i>*</i> 验证码</span>
+		 <div class="bingdingbox_yz"><input type="text" name="authcode" class="bingdingbox_text">
+        <img id="vcode_img" src="{yun:}$config.sy_wapdomain{/yun}/authcode.inc.php" class="bingdingbox_yzm" onclick="checkCode('vcode_img');"></div></li>
+			
+		</ul>
+	</div>
+     <div class="bingdingbox_bth_box"> 
+          <input type="button" value="发送验证邮箱" class="bingdingbox_bth" onclick="check_email('vcode_img');">
+       
+     
+			
+    </div>
+    {yun:}/if{/yun}
+    {yun:}if $smarty.get.type=="moblie"{/yun}
+       <div class="wap_member_comp_h1"><span>绑定手机</span></div>
+       
+
+	<div class="pmail_hint">
+		绑定完成后，您可以使用该手机号码登录账号、找回密码
+	</div>
+   <div class="bingdingbox">
+		<ul>
+			 <li>  <span class="bingdingbox_name"><i>*</i> 手机号</span>
+			 <input type="text" class="bingdingbox_text" name="moblie" id="moblieval" value="{yun:}$member.moblie{/yun}">
+			</li>
+			  <li class="bingdingbox_yz_line"> 
+         <span class="bingdingbox_name"><i>*</i> 短信验证</span>
+		  <div class="bingdingbox_yz"> <input type="text" class="bingdingbox_text" id="moblie_code">
+				<a href="javascript:void(0);" onclick="sendmoblie('vcode_img');" class="bingdingbox_textym" id="time">获取验证码</a></div>
+			</li>
+       <li> <span class="bingdingbox_name"><i>*</i> 验证码</span>
+		  <div class="bingdingbox_yz"> <input type="text" name="authcode" class="bingdingbox_text">
+        <img id="vcode_img" src="{yun:}$config.sy_wapdomain{/yun}/authcode.inc.php"  class="bingdingbox_yzm" onclick="checkCode('vcode_img');"></div></li>
+			
+		</ul>
+	
+    </div>
+     <div class="bingdingbox_bth_box"> 
+          <input type="button" value="提交" class="bingdingbox_bth" onclick="check_moblie('vcode_img');">
+      </div>
+	{yun:}/if{/yun}
+
+
+<input type="hidden" id="send" value="0" />
+</section>
+</div>
+</div>
+{yun:}include file="$wapstyle/footer.htm"{/yun} 

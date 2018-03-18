@@ -1,0 +1,141 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<script>
+
+$(document).ready(function(){
+	var layerindex = '';
+	$('.com_pop_bth_qx').click(function(){
+		layer.close(layindex);
+	});
+	$(".status").click(function(){
+		$("#paylog_id").val($(this).attr("id"));
+		$("#alertcontent").val($(this).attr("remark"));
+		layindex = $.layer({
+			type : 1,
+			title :'备注', 
+			closeBtn : [0 , true],
+			border : [10 , 0.3 , '#000', true],
+			area : ['325px','215px'],
+			page : {dom :"#infobox"}
+		});
+	});
+});
+</script>
+
+<div class="w1000">
+  <div class="admin_mainbody"> {yun:}include file="$comstyle/left.htm"{/yun}
+    <div class=right_box>
+    <div class="member_data">
+        <div class="member_data_left">
+          <div class="member_data_left_name">尊敬的企业用户：</div>
+           <div class="mt10">您当前是：<span class="comindex_money_pd_s">{yun:}$statis.rating_name{/yun}</span></div>
+	    {yun:}if $statis.rating!='0'{/yun}
+	     	<!--已开通情况-->
+	        <div class="member_data_tip mt10"> 服务到期为：{yun:}if $statis.rating!='0'{/yun}{yun:}$statis.vip_stime|date_format:'%Y-%m-%d'{/yun} - {yun:}if $statis.vip_etime==0{/yun}永久{yun:}else{/yun}{yun:}$statis.vip_etime|date_format:'%Y-%m-%d'{/yun}{yun:}/if{/yun}{yun:}else{/yun}已到期{yun:}/if{/yun}</div>
+	    {yun:}else{/yun}
+	    	<!--未开通情况-->
+	     	<div class="member_data_tip mt10">您还未开通任何会员，请及时开通！ <a href="index.php?c=right" class="cblue">立即开通</a></div>
+	    {yun:}/if{/yun}
+        </div>
+        <div class="member_data_right">
+          <ul>
+            <li><span class="member_data_right_n">{yun:}$statis.integral{/yun}</span>
+              <div class="member_data_right_p">可用{yun:}$config.integral_pricename{/yun}</div>
+            </li>
+            <li><span class="member_data_right_n">{yun:}$integral{/yun}</span>
+              <div class="member_data_right_p">已消费{yun:}$config.integral_pricename{/yun}</div>
+            </li>
+            <li><a href="index.php?c=pay&type=integral" class="member_data_right_a member_data_right_a_cz">充值</a>
+              <div class="member_data_right_p"><a href="index.php?c=paylog&consume=ok" class="member_data_right_a cblue">明细</a></div> 
+            </li>
+          </ul>
+        </div>
+      </div>
+    
+    
+    
+   <div class="admincont_box mt20">
+   <div class="yun_com_tit">
+					<span class="yun_com_tit_s">财务明细</span>
+				</div>
+				
+  <div class="job_list_tit">
+					<ul class="">
+                    <li  {yun:}if $smarty.get.c=="com"{/yun}class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=com" >订单记录</a></li>
+          
+            <li {yun:}if $smarty.get.c=="paylog"&&$smarty.get.consume=="ok"{/yun}class="job_list_tit_cur"{yun:}/if{/yun}><a href="index.php?c=paylog&consume=ok" >消费明细</a></li>
+            <li {yun:}if $smarty.get.c=="paylog"&&$smarty.get.consume!="ok"{/yun}  class="job_list_tit_cur"{yun:}/if{/yun} ><a href="index.php?c=paylog" >充值记录</a></li>
+                    <ul>
+
+        </div>
+        
+  
+        <div class="clear"></div>
+          <div class="com_body">
+      
+        <div class="clear"></div>
+        
+        <div class="com_job_box mt20">
+     
+      <table class="com_table">
+      {yun:}if !empty($rows){/yun}
+          <tr>
+           <th>充值单号</th>
+          <th>充值时间</th>
+           <th>充值金额</th>
+           <th>支付类型</th>
+           <th>状态</th>
+           <th >操作</th>
+              </tr>
+          {yun:}foreach item=log from=$rows{/yun}    
+          {yun:}assign var="state" value=$log.order_state{/yun}   
+              <tr>  
+ 
+            <td align="left">{yun:}$log.order_id{/yun}</td>
+            <td align="center">{yun:}$log.order_time|date_format:'%Y-%m-%d %H:%M:%S'{/yun}</td>
+            <td align="center">{yun:}$log.order_price{/yun}</td>
+            <td align="center">{yun:}if $log.type==1{/yun}购买会员{yun:}elseif $log.type=='2'{/yun}{yun:}$config.integral_pricename{/yun}充值{yun:}elseif $log.type=='3'{/yun}银行转帐{yun:}elseif $log.type=='4'{/yun}金额充值{yun:}elseif $log.type=='5'{/yun}购买增值包{yun:}elseif $log.type=='10'{/yun}置顶招聘{yun:}elseif $log.type=='11'{/yun}紧急招聘{yun:}elseif $log.type=='12'{/yun}职位推荐{yun:}elseif $log.type=='13'{/yun}自动刷新{yun:}elseif $log.type=='16'{/yun}刷新职位{yun:}elseif $log.type=='17'{/yun}刷新兼职{yun:}elseif $log.type=='19'{/yun}下载简历{yun:}elseif $log.type=='20'{/yun}发布职位{yun:}elseif $log.type=='21'{/yun}发布兼职{yun:}elseif $log.type=='23'{/yun}面试邀请{yun:}elseif $log.type=='24'{/yun}兼职推荐{yun:}/if{/yun}&nbsp;</td>
+            <td align="center">{yun:}$arr_data.paystate.$state{/yun}</td>
+            <td align="center">{yun:}if $log.order_type=='bank'&&$log.order_state!='2'{/yun} 
+            <a href="javascript:;" id="{yun:}$log.id{/yun}" class="com_bth cblue status" remark="{yun:}$log.order_remark{/yun}">备注修改</a>
+            {yun:}/if{/yun} 
+              {yun:}if $log.order_state=='1' && $log.order_type!='bank'{/yun} <a href="index.php?c=payment&id={yun:}$log.id{/yun}" class="com_bth cblue" >付款</a> 
+              
+              <a href="javascript:void(0)" onclick="del_pay({yun:}$log.id{/yun})" class="com_bth cblue">取消</a> {yun:}else{/yun}
+              {yun:}$arr_data.paystate.$state{/yun}
+              {yun:}/if{/yun}
+	
+			  </td>     
+          </tr>
+          {yun:}/foreach{/yun}
+          {yun:}else{/yun}
+           <tr>
+                  <td colspan="6" class="table_end">
+          <div class="msg_no">
+          您还没有订单记录。
+          </div>  </td>
+                    </tr>
+          {yun:}/if{/yun}
+            <tr>
+                  <td colspan="6" class="table_end">
+       <div class="diggg">{yun:}$pagenav{/yun}</div> </td>
+                    </tr>
+</table>
+  </div> 
+</div>
+</div>
+	<div class="infoboxp22" id="infobox" style="display:none;width: 303px; height:160px;">
+      <div>
+        <form action="index.php?c=paylog" method="post" id="formstatus" target="supportiframe" onsubmit="return paylog_remark();">
+          <div class="jb_infobox" style="width: 100%;">
+            <input name="id" id='paylog_id' type="hidden"> 
+			 <textarea id="alertcontent" style="width:303px;margin:5px;height:100px" name="order_remark" cols="30" rows="9" class="hr_textarea"></textarea>
+          </div>
+          <div class="jb_infobox" style="width: 100%;">
+            <button type="submit" name='submit' value='1' class="com_pop_bth_qd" style="margin-left:80px;">确认</button>
+            &nbsp;&nbsp;
+            <button type="button" class="com_pop_bth_qx">取消</button>
+          </div>
+        </form>
+      </div>
+    </div>
+{yun:}include file="$comstyle/footer.htm"{/yun}

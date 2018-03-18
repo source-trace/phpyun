@@ -1,0 +1,9 @@
+<?php 
+$data=array("0"=>array("name"=>"专员","url"=>"http://www.job.com/index.php?m=com&keyword=专员","num"=>"10000")
+,"1"=>array("name"=>"北京","url"=>"http://www.job.com/index.php?m=user&keyword=北京","num"=>"61")
+,"2"=>array("name"=>"网页设计","url"=>"http://www.job.com/index.php?m=com&keyword=网页设计","num"=>"39")
+,"3"=>array("name"=>"计算机","url"=>"http://www.job.com/index.php?m=user&keyword=计算机","num"=>"19")
+,"4"=>array("name"=>"工程师","url"=>"http://www.job.com/index.php?m=com&keyword=工程师","num"=>"18")
+)
+; 
+?>

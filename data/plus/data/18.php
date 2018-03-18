@@ -1,0 +1,9 @@
+<?php 
+$data=array('0'=>array('name'=>'nanmen','email'=>'','url'=>'http://www.job.com/ask/index.php?c=friend&a=myquestion&uid=17784','moblie'=>'','usertype'=>'企业用户','hits'=>'0','reg_date'=>'05-17','login_date'=>'05-17')
+,'1'=>array('name'=>'123123cscs','email'=>'','url'=>'http://www.job.com/ask/index.php?c=friend&a=myquestion&uid=17783','moblie'=>'','usertype'=>'企业用户','hits'=>'0','reg_date'=>'05-15','login_date'=>'01-01')
+,'2'=>array('name'=>'456','email'=>'','url'=>'http://www.job.com/ask/index.php?c=friend&a=myquestion&uid=17772','moblie'=>'','usertype'=>'企业用户','hits'=>'0','reg_date'=>'04-19','login_date'=>'01-01')
+,'3'=>array('name'=>'阿实打实的33','email'=>'','url'=>'http://www.job.com/ask/index.php?c=friend&a=myquestion&uid=17760','moblie'=>'','usertype'=>'企业用户','hits'=>'0','reg_date'=>'04-15','login_date'=>'01-01')
+,'4'=>array('name'=>'12333','email'=>'','url'=>'http://www.job.com/ask/index.php?c=friend&a=myquestion&uid=17758','moblie'=>'','usertype'=>'企业用户','hits'=>'0','reg_date'=>'04-15','login_date'=>'01-01')
+)
+; 
+?>

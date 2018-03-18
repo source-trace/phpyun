@@ -1,0 +1,172 @@
+@charset "utf-8";
+/* CSS Document */
+*{padding:0;margin:0;}
+li{list-style-type:none;}
+.w1000{width:1100px;margin:0 auto;}
+.fl{float:left;}
+.fr{float:right;}
+em,i{font-style:normal;}
+body{font:14px 微软雅黑;color:#272636;}
+input,textarea{font-size:14px; font-family:微软雅黑;}
+a{color:#272636;text-decoration:none;cursor:pointer;}
+body{width:100%;height:100%;margin:0;padding:0;font:0.8rem Helvetica Neue,Helvetica,STHeiTi,sans-serif;line-height:1.5;background:#f6f6f6;font-family:Microsoft Yahei; font-size:14px;}
+html{width:100%;height:100%;-webkit-text-size-adjust:none;-moz-text-size-adjust:none;-ms-text-size-adjust:none;-o-text-size-adjust:none;text-size-adjust:none;}
+.itwap_head_box{width:100%;height:50px;}
+.itwap_head_box_c{width:100%;height:50px; position:fixed;left:0px;top:0px; z-index:1000000000000000}
+.itwap_head{width:100%;height:50px;background:#3b96de;position:relative;z-index: 10000000;}
+.itwap_head_search{padding-top:7px;margin:0 auto;}
+.itwap_head_search_box{width:70%;margin:0 auto;}
+.itwap_head_search_box_c{border:1px solid #ddd;height:33px;overflow:hidden;background:#fff;position:relative;border-radius:30px;padding-left:10px;}
+.itwap_head_search_text{width:100%;height:35px;line-height:35px;border:none;font-size:14px;color:#666;background:#fff;}
+.itwap_head_search_box_bth{position:absolute;right:0;top:0;width:60px;height:40px;border:none;background:none; z-index:10;}
+.itwap_head_search_icon{width:20px;height:20px;background:url(../images/ask_search_icon.png) no-repeat; background-size:100%;display:inline-block;position:absolute;right:10px;top:5px; z-index:1}
+.train_nav_icon{width:23px;height:23px;background:url(../images/header_nav.png) no-repeat; background-size:100%;display:inline-block;position:absolute;right:5px;top:0px; z-index:1}
+.itwap_head_return{position:absolute;left:10px;top:50%;margin-top:-13px;}
+.itwap_head_return_icon{width:20px;height:20px;display:inline-block;margin-top:3px;background:url(../images/ft.png) no-repeat;}
+.train_top_icon{position:absolute;right:10px;top:13px;}
+.train_top_icon_rt{position:relative; z-index:1000}
+.train_top_icon_list{position:absolute;z-index:900;background:#000;top:37px;right:-10px;width:105px;text-align:center;}
+.train_top_icon_list ul li{height:37px;display:block;line-height:37px;border-bottom:1px solid #8a8a8a;}
+.train_top_icon_list ul li a{color:#fff;display:block;}
+.train_top_icon_list ul li:hover{text-decoration:underline;}
+.itwap_top_lt ul li:last-child{border:none;}
+.train_top_icon_tt{position:absolute;width:17px;height:7px;top:-7px;right:14px;background:url(../images/t.png) no-repeat;}
+.itwap_top{width:100%;margin-bottom:10px;background:#fff;border-bottom:1px solid #f2f2f2;position:relative; z-index:100;}
+.itwap_top ul li{width:23%;display:inline-block;border-right:1px solid #f2f2f2;text-align:center;font-size:14px;position:relative; z-index:800;color:#999; padding:10px 0;}
+.itwap_top ul li:nth-child(4n) {border-right: none;}
+.itwap_top ul li a{color:#666;word-break:keep-all;white-space:nowrap;overflow:hidden;width:75%;display:block;}
+.itwap_top_icon{display:inline-block;width:10px;height:6px;position:absolute;right:10px;top:18px;background:url(../images/dw.png) no-repeat;}
+.itwap_top_lt{width:100%;margin-bottom:10px;background:#fff;border-bottom:1px solid #f2f2f2;position:relative; z-index:100;}
+.itwap_top_lt ul li{width:49%;text-align:center;display:inline-block;border-right:1px solid #f2f2f2;font-size:14px;position:relative;color:#999; padding:10px 0;}
+.itwap_top_It ul li:nth-child(2n) {border-right: none;}
+.itwap_top_It ul li a{color:#666;word-break:keep-all;white-space:nowrap;overflow:hidden;width:75%;display:block;}
+.itwap_top_c{width:100%;margin-bottom:10px;background:#fff;border-bottom:1px solid #f2f2f2;position:relative; z-index:100}
+.itwap_top_c ul li{width:32%;text-align:center;display:inline-block;border-right:1px solid #f2f2f2;font-size:14px;position:relative;color:#999; padding:10px 0;}
+.itwap_top_c ul li:nth-child(3n) {border-right: none;}
+.itwap_top_c ul li a{color:#666;word-break:keep-all;white-space:nowrap;overflow:hidden;width:75%;display:block;}
+.train_class{position:relative;margin-bottom:10px;padding:15px 10px;background:#fff;border:1px solid #dcdcdc;border-left:none;border-right:none;}
+.train_class_img{position:absolute;left:10px;top:19px;}
+.train_class_ct{padding-left:77px;line-height:26px;}
+.train_class_ct_tit{font-size:16px;font-weight:bold;color:#3b96de;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.train_class_ct_tit a{color:#3b96de;}
+.train_money{color:#999;font-size:14px;}
+.train_money_r{color:#f30;font-size:16px;}
+.train_class_st a{color:#999;}
+.train_class_st{color:#999;;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.train_m_s{padding-right:10px;}
+.train_tech_zg{color:#f30;border:1px solid #f00f53;text-align:center; padding:0px 3px;margin-left:10px;display:inline-block;font-size:14px;font-weight:normal;}
+.itwap_head_tit{width:100%;text-align:center;font-size:18px;color:#fff;line-height:50px;}
+.train_tech_detail{width:100%;text-align:center;background:#fff;}
+.train_tech_detail dl dd.train_tech{padding-top:10px;font-size:16px;color:#3b96de;font-weight:bold;}
+.train_tech_detail dl dt img{border:1px solid #dcdcdc;margin-top:10px;}
+.itwap_job_ds_top{height:40px;line-height:40px;position:relative;color:#222;font-weight:bold;}
+.itwap_job_ds_top_icon{position:absolute;left:-10px;top:14px;width:6px;height:14px;background:#3b96de;}
+.itwap_job_ds{background:#fff;padding:10px 10px 20px;}
+.itwap_job_title{padding:10px;line-height:28px;background:#fff;border:1px solid #dcdcdc;border-left:none;border-right:none;}
+.itwap_job_title_nm a{font-size:16px;color:#3b96de;font-weight:bold;}
+.itwap_job_title_wage{font-size:14px;color:#8c8c8c;}
+.itwap_job_title_wage_cr{color:#e91010;}
+.itwap_job_title_city{color:#999;}
+.itwap_job_ds{margin-top:10px;background:#fff;padding:10px;border-top:1px solid #dcdcdc;}
+.itwap_job_ds_top{height:30px;line-height:30px;position:relative;color:#222;font-weight:bold;}
+.itwap_job_ds_top_icon{position:absolute;left:-10px;top:8px;width:6px;height:14px;background:#3b96de;}
+.itwap_job_ds_yq{margin-bottom:20px;color:#666;line-height:26px;}
+.itwap_job_ds_pp{position:relative;color:#666;}
+.itwap_job_ds_pp_img{position:absolute;left:0;top:5px;}
+.itwap_job_ds_pp_img_p{position:absolute;left:0;top:0;}
+.itwap_job_ds_pp_ct{padding-left:90px; line-height:22px;}
+.itwap_job_ds_pp_ct_b{padding-left:70px;line-height:25px;}
+.itwap_job_ds_gz{position:absolute;right:0;top:0;}
+.itwap_job_ds_gz a{padding:0px 6px;height:25px;line-height:25px;background:#F60;color:#fff;display:block;}
+.itwap_job_ds_pp_nm{font-weight:bold;color:#222;}
+.itwap_job_ds_word{border-top:1px solid #dcdcdc;background:#fff;padding:10px;}
+.itwap_job_ds_word_icon{margin-right:8px;width:16px;height:14px;background:url(../images/wen.png) no-repeat;display:inline-block;}
+.itwap_job_ds_word_top{color:#222;}
+.itwap_job_ds_textarea{margin-top:10px;}
+.itwap_job_ds_textarea textarea{width:100%;height:88px;border:1px solid #eee;}
+.itwap_job_ds_yzm{margin-top:10px;}
+.itwap_job_ds_yzm_bx{width:105px;float:left;height:33px;border:1px solid #eee;text-indent:10px;}
+.itwap_job_ds_yzm_img{display:inline-block;float:left;margin-left:10px;}
+.itwap_job_but_fs{width:85px;height:35px;display:inline-block;margin-left:10px;border:none;background:#F60;color:#fff;text-align:center;line-height:35px;}
+.itwap_job_ds_detail{color:#666;}
+.itwap_job_ds_detail:hover{color:#f60;}
+.itwap_bottom_sc a{color:#f60;padding-left:10px;}
+.itwap_bottom_fx a{color:#f60;padding-left:10px;}
+.itwap_job_ds_kh{color:#222;margin-bottom:10px;}
+.itwap_job_ds_job_b{padding:10px;line-height:26px;background:#fff;border-bottom:1px solid #dcdcdc;}
+.itwap_job_b_nm a {font-size:16px;font-weight:bold;color:#3b96de;}
+.itwap_job_b_city{color:#8c8c8c;}
+.itwap_job_b_jy{color:#666;}
+.itwap_job_b_jy i{color:#F36;font-size:16px;font-weight:bold;}
+.itwap_xs{width:100%;height:39px;line-height:39px;padding-left:10px;background:#3985bb;color:#fff;position:relative;margin-top:10px;}
+.itwap_xs_lt em{color:#edf508;font-weight:bold;}
+.itwap_xs_ss{position:absolute;right:0;top:0;background:#f60;width:93px;text-align:center;height:39px;line-height:39px;}
+.itwap_xs_ss a{color:#fff;}
+.itwap_xs_ss:hover{background:#f90;}
+.itwap_bottom{width:100%; position:fixed;left:0px;bottom:0px;}
+.itwap_bottom_ysc{width:30%;height:55px;background:#fff;font-size:16px;text-align:center;line-height:55px;border-top:1px solid #eee;border-right:1px solid #eee;display:inline-block;float:left;}
+.itwap_bottom_sc{width:30%;height:55px;font-size:16px;text-align:center;line-height:55px;background:#fff url(../images/x.png) no-repeat 20px center;border-top:1px solid #eee;border-right:1px solid #eee;display:inline-block;float:left;}
+.itwap_bottom_ydg{width:39%;height:56px;text-align:center;line-height:55px;background:#CCC;display:inline-block;}
+.itwap_bottom_li{width:39%;height:56px;text-align:center;line-height:55px;background:#F60;display:inline-block;}
+.itwap_bottom_li a{color:#fff;font-size:16px;}
+.itwap_bottom_fx{width:30%;height:55px;font-size:16px;text-align:center;line-height:55px;background:#fff url(../images/yw.png) no-repeat 18px center;border-top:1px solid #eee;border-right:1px solid #eee;display:inline-block;float:left;}
+.itwap_bottom_sc a{color:#f60;padding-left:10px;}
+.itwap_bottom_fx a{color:#f60;padding-left:10px;}
+.train_job_ds_pp_nm{font-size:16px;color:#3b96de;font-weight:bold;}
+.itwap_job_ds_pp_ct p{word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.train_nmb{color:#f30;font-size:16px;}
+.train_dt_bg{padding:10px;line-height:28px;background:#e2f8e2;margin-top:10px;}
+.train_dt_bg_tit{font-weight:bold;}
+.train_cs_turn{padding:10px 0px;border-top:1px solid #dcdcdc;color:#666;line-height:25px;}
+.train_jg_top{width:100%;height:101px;position:relative; overflow:hidden}
+.train_jg_top_bt{position:absolute;z-index:2;font-size:16px;bottom:0;width:100%;height:30px;line-height:30px;}
+.train_jg_bt_bg{width:100%;height:30px;z-index:3;background:#000;opacity: 0.4;display:block;position:absolute;bottom:0;}
+.train_jg_top_bt span{color:#fff;positioN:absolute;z-index:4;text-align:center;width:100%;}
+.train_jg_top_cy{position:absolute;bottom:35px;left:50%; margin-left:-30px;z-index:5;}
+.train_jg_top_cy img{border-radius:50%}
+.train_jg_more{width:100%;text-align:center;padding:10px 0px 0px;font-weight:bold;}
+.train_jg_more a{color:#f30;}
+.train_word_z_tit_r{color:#f30;}
+.train_word_z_tit{width:100%;height:35px;line-height:35px;}
+.train_word_box_phe{width:100%;height:35px;line-height:35px;border:1px solid #e9e9e9;}
+.train_word_box{width:100%;height:90px;border:1px solid #e9e9e9;}
+.train_word_but_t{margin-top:10px;margin-bottom:20px;width:100%;height:40px;line-height:40px;border:none;font-size:16px;border-radius:2px;text-align:center;background:-webkit-gradient(linear,0 0,0 100%,from(#f60),to(#f60));color:#fff;border-radius:3px;}
+.train_word_but_t:hover{background:#f90;}
+.train_word_list{width:100%;}
+.train_word_list_w{width:100%;position:relative;}
+.train_word_list_w_ft{position:absolute;left:0;top:8px;}
+.train_word_list_w_ft img{border:1px solid #e9e9e9;}
+.train_word_list_w_rt{padding-left:38px;color:#999;}
+.train_word_list_w_nm a{font-size:14px;font-weight:bold;color:#222;}
+.train_word_list_bb{position:relative;margin-top:10px;margin-bottom:20px;padding:10px;border:1px solid #e9e9e9;color:#333;}
+.train_word_list_bb_icon{position:absolute;width:11px;height:7px;display:block;background:url(../images/dd.png) no-repeat;top:-7px;left:8px;}
+.train_jg_c{width:100%;height:218px;overflow:hidden;position:relative;}
+.train_jg_c ul{width:9999px;height:218px;overflow:hidden;position:absolute;top:0;left:0}
+.train_jg_c li{float:left;width:100%;height:218px;}
+/*培训报名*/
+.Sign_up_box li .Sign_up_box_span{ width:70px; display:inline-block; text-align:right;color:#666}
+.txt_input {width:180px;border: 1px solid #DDDDDD;color: #333333;height: 20px;line-height: 20px; padding: 2px 3px;}
+.Sign_up_box_span_n{  font-weight:bold;color:#105396}
+.txt_input_submit{width:60px;height:28px; background:#f80;color:#fff;border:none; font-weight:bold; cursor:pointer}
+.txt_textarea{width:180px;height:78px;border: 1px solid #DDDDDD;color: #333333; line-height: 20px; font-size:12px; vertical-align:top}
+/*弹出框*/
+.job_pop_box{width:100%;background:#fff; position:absolute;left:0px;top:88px; display:none; z-index:9000}
+.job_pop_pay_list{width:100%;height:100%; position:relative}
+.job_pop_pay_list:before{width:100%;height:100%; content:''; background:#000; position:absolute;left:0px;top:0px; opacity:0.5; z-index:-1}
+.job_pop_pay_list li{border-bottom:1px solid #cdd7de; padding:0px 10px; position:relative; background:#fff}
+.job_pop_pay_list li a{ display:block; padding:10px 0;}
+.searchOptions_list_a:hover{color:#F90}
+.train_wt{margin-top:10px;}
+.train_wt a{background:#f00f53;color:#fff;padding:5px 15px;}
+.train_tech_zg_z{color:#f00f53;position:absolute;right:10px;top:10px;text-align:center; padding:0px 3px;margin-left:10px;display:inline-block;font-size:13px;font-weight:normal;}
+.px_t_gz{ padding:2px 10px; background:#f60;color:#fff}
+.firm_name_gz_no .px_t_gz{ background:#ccc;color:#000}
+.img-responsive{max-width:100%;}
+.vjs-poster{max-width:100%;}
+.train_zs{background:#e2e2e2;color:#555;padding:2px 15px;margin-top:10px;display:inline-block;}
+.train_tech_jn{color:#F30;}
+
+
+
+
+

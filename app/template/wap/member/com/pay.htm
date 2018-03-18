@@ -1,0 +1,756 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<script src="{yun:}$wap_style{/yun}/js/mobiscroll/mobiscroll_002.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$wap_style{/yun}/js/mobiscroll/mobiscroll.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$wap_style{/yun}/js/mobiscroll/mobiscroll_003.js?v={yun:}$config.cachecode{/yun}"></script>
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/mobiscroll/css/animate.min.css?v={yun:}$config.cachecode{/yun}" type="text/css">
+<link rel="stylesheet" href="{yun:}$wap_style{/yun}/js/mobiscroll/css/mobiscroll.css?v={yun:}$config.cachecode{/yun}" type="text/css">  
+
+<div class="main_member_body">
+<section class="wap_member">
+  <div class="wap_member_comp_h1" style="position:relative"> <span>会员充值</span> </div>
+  <div class="wap_member_Receive" >
+    <script>
+    var weburl='{yun:}$config_wapdomain{/yun}';
+    $(function () {
+    	var currYear = (new Date()).getFullYear();
+    	var opt = {
+    		preset: 'date', //日期
+    		theme: 'android-ics light', //皮肤样式
+    		display: 'modal', //显示方式 
+    		mode: 'scroller', //日期选择模式
+    		dateFormat: 'yy-mm-dd', // 日期格式
+    		setText: '确定', //确认按钮名称
+    		cancelText: '取消',//取消按钮名籍我
+    		dateOrder: 'yyyymmdd', //面板中日期排列式
+    		dayText: '日', monthText: '月', yearText: '年',
+    		startYear: currYear -18, //开始年份
+    		endYear: currYear+100 //结束年份
+    	};
+    	$("#bank_time").mobiscroll('setDate', $("#bank_time").val(), true).date(opt);  
+    });
+    function CheckForm(){
+		return true;
+	}
+	function pay_form(type){
+
+		var com_vip_price = $('#com_vip_price').val();
+		if(!com_vip_price){
+			if(type=='price'){
+
+				layermsg('请选择购买类型！', 2);return false; 
+
+			}else if(type=='int'){
+			
+				layermsg('请正确输入充值数量！', 2);return false; 
+			}else if(type=='pay'){
+			
+				layermsg('请正确输入充值数量！', 2);return false; 
+			}else if(type=='service'){
+				
+				layermsg('请正确选择套餐！', 2);return false;
+			}
+
+			return false;
+		}
+		var paytype=$('input:radio[name="paytype"]:checked').val();
+		{yun:}if $smarty.get.id{/yun}
+		if(paytype==null){
+			layermsg('请选择一种支付方式！', 2);return false; 
+		}else if(paytype=='alipay'){
+			$("#paymentform").attr("action","{yun:}$config.sy_weburl{/yun}/api/wapalipay/alipayto.php?dingdan={yun:}$order.order_id{/yun}&dingdanname={yun:}$order.order_id{/yun}&alimoney={yun:}$order.order_price{/yun}");
+		}else if(paytype=='bank'){
+			$("#paymentform").attr("action","index.php?c=paybank&id={yun:}$order.id{/yun}");
+		}
+		{yun:}else{/yun}
+			if(paytype=='bank'){
+				$("#paymentform").attr("action","index.php?c=paybank");
+				$("#paymentform").attr("enctype","multipart/form-data");
+			}
+		{yun:}/if{/yun}
+		if(paytype=='bank'){
+			if($('#bank_name').val()==''){
+				layermsg('请填写汇款银行！', 2);return false;
+			}else if($('#bank_number').val()==''){
+				layermsg('请填写汇入账号！', 2);return false;
+			}else if($('#bank_price').val()==''){
+				layermsg('请填写汇款金额！', 2);return false;
+			}else if($('#bank_time').val()==''){
+				layermsg('请填写汇款时间！', 2);return false;
+			}else if($('#order_pic').val()==''){
+				layermsg('请上传汇款单！', 2);return false;
+			}
+		}
+
+		return true;
+	}
+	function check_rating_coupon(id){
+		var value=$("#comvip option:selected").attr("price");
+		if(value!=""){
+			$("#com_vip_price").val(value);
+			$("#bank_price").val(value);
+			$("#span_com_vip_price").html(value);
+		}else{
+			$("#com_vip_price").val('0');
+			$("#bank_price").val('');
+			$("#span_com_vip_price").html('0');
+		}
+	}
+</script> 
+    {yun:}if $smarty.get.id{/yun}
+    <!----------------------------- 订单去付款---------------------- -->
+	<form action="" method="post" onsubmit="return pay_form('payment');" id="paymentform">
+		<div class="yun_wap_addresume_box_group">
+	        <div class="yun_wap_addresume_box_label"> 订单号  </div>
+	        <div class="yun_wap_addresume_box_control">{yun:}$order.order_id{/yun}
+	        	<input type="hidden" name="order_id" size="10" value="{yun:}$order.order_id{/yun}">
+	        </div>
+      	</div>
+     	<div class="yun_wap_addresume_box_group">
+	        <div class="yun_wap_addresume_box_label"> 支付金额  </div>
+	        <div class="yun_wap_addresume_box_control">
+	      		<span id="span_com_vip_price" class="pay_com_lsit_je">￥{yun:}$order.order_price{/yun}</span> 元
+	        	<input type="hidden" name="price" size="10" value="{yun:}$order.order_price{/yun}" id="com_vip_price">
+	        </div>
+     	</div>
+		
+         {yun:}if $paytype.alipay{/yun}
+         <div class="pay_f_list">
+          <label><i class="pay_f_list_zfb"></i><span class="pay_f_list_box">支付宝支付 </span>
+            <input type='radio' name='paytype' value='alipay' onclick="paycheck('alipay');" class="pay_f_list_radio">
+          </label>
+        </div>
+            {yun:}/if{/yun}
+             {yun:}if $paytype.bank{/yun}
+         <div class="pay_f_list">
+          <label><i class="pay_f_list_yl"></i><span class="pay_f_list_box">银行汇款 </span>
+            <input type='radio' name="paytype" value="bank" onclick="paycheck('bank');" class="pay_f_list_radio">
+          </label>
+        </div>
+        
+        <div class="paybank item" {yun:}if $paytype.alipay=='1'{/yun}style="display:none"{yun:}/if{/yun}>                
+    <div class="paybank_tip"><span class="com_remind">汇款前请仔细核对银行帐号</span></div>
+    <div class=admin_note2 >
+      <div class="my_table_msg">
+        
+        {yun:}if is_array($banks){/yun}
+        {yun:}foreach item=blist from=$banks{/yun}
+        
+         <div class="pay_bank_list">
+         <div class="">{yun:}$blist.bank_name{/yun}</div>
+        <div class="">{yun:}$blist.name{/yun}</div>
+         <div class="">{yun:}$blist.bank_number{/yun}</div>
+        <div class="">{yun:}$blist.bank_address{/yun}</div>
+        </div>
+        {yun:}/foreach{/yun}
+        {yun:}else{/yun}
+       <div class="wap_member_no">暂未添加银行</div>
+       
+        {yun:}/if{/yun}
+      </div>
+         <div class="paybank_tip">填写汇款凭证：</div>
+     <div class="my_table_msg">
+      <div class="paybank_hk_list">
+        	<div class="paybank_name">汇款银行</div>
+          <div class=""><input type="text" id="bank_name" name="bank_name" class="paybank_hk_text" value="" placeholder="如：中国银行+沭阳开发区支行" /></div>
+		</div>
+		  <div class="paybank_hk_list">
+        <div class="paybank_name">汇入账号</div>
+		<div class=""><input type="text" id="bank_number" name="bank_number" class="paybank_hk_text" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" value="" /></div>
+		</div>
+          <div class="paybank_hk_list">
+        <div class="paybank_name">汇款金额</div>
+		<div class=""><input type="text" id="bank_price" name="bank_price" class="paybank_hk_text" value="{yun:}$order.order_price{/yun}" /></div>
+        </div>
+          <div class="paybank_hk_list">
+        <div class="paybank_name">汇款时间</div>
+		<div class=""><input type="text" id="bank_time" name="bank_time"class="paybank_hk_text" />
+					  </div>
+                      </div>
+                        <div class="paybank_hk_list">
+				
+		<div class="paybank_name">汇款单</div>
+		<div class=""><div class="paybank_hk_file_box"><i class="paybank_hk_file_icon"></i>上传汇款单<input type="file" name="order_pic" class="paybank_hk_file" /></div>
+				</div>
+				  </div>
+				</div> 
+				</div></div>
+            {yun:}/if{/yun}
+            
+		{yun:}if $paytype.alipay||$paytype.bank{/yun}	
+      <div class="pay_com_list">
+        <div class="pay_com_lsit_right">
+          <input type="submit" value="确认支付" name=nextstep  class="pay_choose_btn_01">
+        </div>
+      </div>
+	  {yun:}else{/yun} 
+	  <div class="pay_com_list">
+        <div class="pay_com_lsit_right">
+          <span>网站已关闭支付功能，请联系管理员！</span>
+        </div>
+      </div>
+	  {yun:}/if{/yun} 
+  </form>
+  {yun:}else{/yun}
+   <!-----------------------------充值积分或者会员---------------------- -->
+    {yun:}if $smarty.post.usertype==""{/yun}
+    <form name='alipayment' onSubmit="return CheckForm(this);" action="index.php?c=pay" method="post">
+      <div class="pay_choose"><span>选择购买类型</span></div>
+      <ul class="pay_choose_list">
+        <li>
+          <input type="radio" name="usertype" value="price" id="vip" checked="checked" class="pay_choose_list_c"/>
+          <label for="vip" class="pay_choose_list_lable" style="top:10px;">购买会员</label>
+        </li>
+        <li>
+          <input type="radio" name="usertype" value="int" id="int" class="pay_choose_list_c"/>
+          <label for="int" class="pay_choose_list_lable" style="top:10px;">购买{yun:}$config.integral_pricename{/yun}</label>
+        </li>
+      </ul>
+      <div class='admin_tit_right'>
+        <input type='submit' value='下一步' name='nextstep' class="pay_choose_btn_01" >
+      </div>
+      <div class="com_wxt">
+        <div class="wxts">温馨提示：</div>
+        购买会员：请确保您已完全了解您将要购买的会员类型以及所对应的套餐价值！<br>
+        购买{yun:}$config.integral_pricename{/yun}：{yun:}$config.integral_pricename{/yun}可用于购买企业模板、评论等增值功能<br>
+      </div>
+    </form>
+    {yun:}elseif $smarty.post.usertype=="price"{/yun} <!---------充值会员------ -->
+    {yun:}if $smarty.post.id {/yun}
+    <div class="pay_com_cont">
+      <form action="index.php?c=dingdan" method="post" onsubmit="return pay_form('price');"  id="paymentform">
+        <div class="yun_wap_addresume_box_group">
+          <div class="yun_wap_addresume_box_label"> 会员类型 <span class="resume-cont_wate_bj">*</span> </div>
+          <div class="yun_wap_addresume_box_control">
+            <div class="com_select">
+              <select class="textval"  name="comvip" id="comvip" >
+                <option value="{yun:}$rows.id{/yun}" price="{yun:}if $rows.time_start < time()&& $rows.time_end > time(){/yun}{yun:}$rows.yh_price{/yun}{yun:}else{/yun}{yun:}$rows.service_price{/yun}{yun:}/if{/yun}"> {yun:}$rows.name{/yun} </option> 
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="yun_wap_addresume_box_group">
+          <div class="yun_wap_addresume_box_label"> 充值金额 </div>
+          <div class="yun_wap_addresume_box_control"> <span id="span_com_vip_price" class="pay_com_lsit_je">{yun:}if $rows.time_start < time()&& $rows.time_end > time(){/yun}{yun:}$rows.yh_price{/yun}{yun:}else{/yun}{yun:}$rows.service_price{/yun}{yun:}/if{/yun}</span> 元
+            <input type="hidden" name="price" size="10"  id="com_vip_price" value="{yun:}if $rows.time_start < time()&& $rows.time_end > time(){/yun}{yun:}$rows.yh_price{/yun}{yun:}else{/yun}{yun:}$rows.service_price{/yun}{yun:}/if{/yun}">
+          </div>
+          
+        </div>
+        <div class="yun_wap_addresume_box_group">
+          <div class="yun_wap_addresume_box_label"> 充值备注 </div>
+          <div class="yun_wap_addresume_box_control">
+           <div class="yun_wap_addresume_box_control_box"> <textarea name="remark" id='remark'  wrap="physical" class="com_textarea_pay" placeholder="请备注你的姓名及其联系方式"></textarea></div>
+          </div>
+        </div>
+        <div class="clear"></div>
+       
+         <div class="pay_f_list">
+          <label><i class="pay_f_list_zfb"></i><span class="pay_f_list_box">支付宝支付 </span>
+            <input type='radio' name='paytype' value='alipay'onclick="paycheck('alipay');" class="pay_f_list_radio">
+          </label>
+        </div>
+         {yun:}if $paytype.bank{/yun}
+         <div class="pay_f_list">
+          <label><i class="pay_f_list_yl"></i><span class="pay_f_list_box">银行汇款 </span>
+            <input type='radio' name="paytype" value="bank" onclick="paycheck('bank');" class="pay_f_list_radio">
+          </label>
+        </div>
+        
+        <div class="paybank item" {yun:}if $paytype.alipay=='1'{/yun}style="display:none"{yun:}/if{/yun}>                
+   <div class="paybank_tip"><span class="com_remind">汇款前请仔细核对银行帐号</span></div>
+    <div class=admin_note2 >
+      <div class="my_table_msg">
+   
+        {yun:}if is_array($banks){/yun}
+        {yun:}foreach item=blist from=$banks{/yun}
+     
+         <div class="pay_bank_list">
+         <div class="">{yun:}$blist.bank_name{/yun}</div>
+        <div class="">{yun:}$blist.name{/yun}</div>
+         <div class="">{yun:}$blist.bank_number{/yun}</div>
+        <div class="">{yun:}$blist.bank_address{/yun}</div>
+        </div>
+        {yun:}/foreach{/yun}
+        {yun:}else{/yun}
+        <div class="wap_member_no">暂未添加银行</div>
+        {yun:}/if{/yun}
+      </div>
+       <div class=paybank_tip>填写汇款凭证：</div>
+ <div class="my_table_msg">
+      <div class="paybank_hk_list">
+        	<div class="paybank_name">汇款银行</div>
+          <div class=""><input type="text" id="bank_name" name="bank_name" class="paybank_hk_text" value="" placeholder="如：中国银行+沭阳开发区支行" /></div>
+		</div>
+		  <div class="paybank_hk_list">
+        <div class="paybank_name">汇入账号</div>
+		<div class=""><input type="text" id="bank_number" name="bank_number" class="paybank_hk_text" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" value="" /></div>
+		</div>
+          <div class="paybank_hk_list">
+        <div class="paybank_name">汇款金额</div>
+		<div class=""><input type="text" id="bank_price" name="bank_price" class="paybank_hk_text" value="{yun:}if $rows.time_start < time()&& $rows.time_end > time(){/yun}{yun:}$rows.yh_price{/yun}{yun:}else{/yun}{yun:}$rows.service_price{/yun}{yun:}/if{/yun}" /></div>
+        </div>
+          <div class="paybank_hk_list">
+        <div class="paybank_name">汇款时间</div>
+		<div class=""><input type="text" id="bank_time" name="bank_time"class="paybank_hk_text" />
+					  </div>
+                      </div>
+                        <div class="paybank_hk_list">
+				
+		<div class="paybank_name">汇款单</div>
+		<div class=""><div class="paybank_hk_file_box"><i class="paybank_hk_file_icon"></i>上传汇款单<input type="file" name="order_pic" class="paybank_hk_file" /></div>
+				</div>
+				  </div>
+				</div> 
+				</div></div>
+            {yun:}/if{/yun}
+        <div class="pay_com_list">
+          <input type='submit' value='确认订单' name='nextstep'class="pay_choose_btn_01" >
+        </div>
+      </form>
+    </div>
+    {yun:}else{/yun}
+    <div class="pay_com_cont">
+      <form action="index.php?c=dingdan" method="post" onsubmit="return pay_form('price');"  id="paymentform">
+        <div class="yun_wap_addresume_box_group">
+          <div class="yun_wap_addresume_box_label"> 会员类型 <span class="resume-cont_wate_bj">*</span> </div>
+          <div class="yun_wap_addresume_box_control">
+            <div class="com_select">
+              <select class="textval"  name="comvip" id="comvip" onchange="check_rating_coupon(this.value);">
+                <option value="" price=""> 请选择会员类型 </option> 
+				{yun:}foreach  from=$rows item=pay{/yun} 
+				<option value="{yun:}$pay.id{/yun}" price="{yun:}if $pay.time_start < time()&& $pay.time_end > time(){/yun}{yun:}$pay.yh_price{/yun}{yun:}else{/yun}{yun:}$pay.service_price{/yun}{yun:}/if{/yun}"> {yun:}$pay.name{/yun} </option> 
+				{yun:}/foreach{/yun} 
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="yun_wap_addresume_box_group">
+          <div class="yun_wap_addresume_box_label"> 充值金额  </div>
+          <div class="yun_wap_addresume_box_control"> <span id="span_com_vip_price" class="pay_com_lsit_je">0</span> 元
+            <input type="hidden" name="price" size="10"  id="com_vip_price">
+          </div>
+          <span id="coupon" style="display:none;" class="pay_zs_l"></span> </div>
+        <div class="yun_wap_addresume_box_group">
+          <div class="yun_wap_addresume_box_label"> 充值备注  </div>
+          <div class="yun_wap_addresume_box_control">
+           <div class="yun_wap_addresume_box_control_box"> <textarea name="remark" id='remark'  wrap="physical" class="com_textarea_pay" placeholder="请备注你的姓名及其联系方式"></textarea></div>
+          </div>
+        </div>
+        <div class="clear"></div>
+        
+         <div class="pay_f_list">
+          <label><i class="pay_f_list_zfb"></i><span class="pay_f_list_box">支付宝支付 </span>
+            <input type='radio' name='paytype' value='alipay'  onclick="paycheck('alipay');" class="pay_f_list_radio">
+          </label>
+        </div>
+         {yun:}if $paytype.bank{/yun}
+         <div class="pay_f_list">
+          <label><i class="pay_f_list_yl"></i><span class="pay_f_list_box">银行汇款 </span>
+            <input type='radio' name="paytype" value="bank" onclick="paycheck('bank');" class="pay_f_list_radio">
+          </label>
+        </div>
+        
+        <div class="paybank item" {yun:}if $paytype.alipay=='1'{/yun}style="display:none"{yun:}/if{/yun}>                
+    <div class="paybank_tip"><span class="com_remind">汇款时请仔细核对银行帐号：</span></div>
+    <div class=admin_note2 >
+     
+        {yun:}if is_array($banks){/yun}
+        {yun:}foreach item=blist from=$banks{/yun}
+        <div class="pay_bank_list">
+         <div class="">{yun:}$blist.bank_name{/yun}</div>
+        <div class="">{yun:}$blist.name{/yun}</div>
+         <div class="">{yun:}$blist.bank_number{/yun}</div>
+        <div class="">{yun:}$blist.bank_address{/yun}</div>
+        </div>
+        {yun:}/foreach{/yun}
+        {yun:}else{/yun}
+        <div class="wap_member_no">暂未添加银行</div>
+        {yun:}/if{/yun}
+      <div class="paybank_tip">填写汇款凭证：</div>
+      <div class="my_table_msg">
+      <div class="paybank_hk_list">
+        	<div class="paybank_name">汇款银行</div>
+          <div class=""><input type="text" id="bank_name" name="bank_name" class="paybank_hk_text" value="" placeholder="如：中国银行+沭阳开发区支行" /></div>
+		</div>
+		  <div class="paybank_hk_list">
+        <div class="paybank_name">汇入账号</div>
+		<div class=""><input type="text" id="bank_number" name="bank_number" class="paybank_hk_text" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" value="" /></div>
+		</div>
+          <div class="paybank_hk_list">
+        <div class="paybank_name">汇款金额</div>
+		<div class=""><input type="text" id="bank_price" name="bank_price" class="paybank_hk_text" value="" /></div>
+        </div>
+          <div class="paybank_hk_list">
+        <div class="paybank_name">汇款时间</div>
+		<div class=""><input type="text" id="bank_time" name="bank_time"class="paybank_hk_text" />
+					  </div>
+                      </div>
+                        <div class="paybank_hk_list">
+				
+		<div class="paybank_name">汇款单</div>
+		<div class=""><div class="paybank_hk_file_box"><i class="paybank_hk_file_icon"></i>上传汇款单<input type="file" name="order_pic" class="paybank_hk_file" /></div>
+				</div>
+				  </div>
+				</div> 
+				</div></div>
+            {yun:}/if{/yun}
+        <div class="pay_com_list">
+          <input type='submit' value='确认订单' name='nextstep'class="pay_choose_btn_01" >
+        </div>
+      </form>
+    </div>
+  {yun:}/if{/yun}
+
+  {yun:}elseif $smarty.post.usertype=="int"{/yun} <!---------------充值积分------ -->
+  <form action="index.php?c=dingdan" method="post" onsubmit="return pay_form('int');"  id="paymentform">
+  
+    <div class="yun_wap_addresume_box_group">
+        <div class="yun_wap_addresume_box_label"> 充值{yun:}$config.integral_pricename{/yun} <span class="resume-cont_wate_bj">*</span> </div>
+        <div class="yun_wap_addresume_box_control">
+        
+        <input type="hidden" name="pay_type" value="{yun:}$smarty.post.usertype{/yun}"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"/>
+          <input type="text" name="price_int" id="price_int" size="20" value="0" int="{yun:}$config.integral_proportion{/yun}" min="{yun:}$config.integral_min_recharge{/yun}" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" class="yun_wap_pay_text">
+      
+        </div>
+      </div>
+      
+          <div class="yun_wap_addresume_box_group">
+        <div class="yun_wap_addresume_box_label"> 当前比例  </div>
+        <div class="yun_wap_addresume_box_control">
+        
+       1元 = {yun:}$config.integral_proportion{/yun}{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun} 
+      
+        </div>
+      </div>
+          <div class="yun_wap_addresume_box_group">
+        <div class="yun_wap_addresume_box_label"> 所需金额  </div>
+        <div class="yun_wap_addresume_box_control">
+      <span id="span_com_vip_price" class="pay_com_lsit_je">0</span> 元
+          <input type="hidden" name="price" size="10"  id="com_vip_price">
+        </div>
+      </div>
+       <div class="yun_wap_addresume_box_group">
+          <div class="yun_wap_addresume_box_label"> 充值备注 </div>
+          <div class="yun_wap_addresume_box_control">
+           <div class="yun_wap_addresume_box_control_box"> <textarea name="remark" id='remark'  wrap="physical" class="com_textarea_pay" placeholder="请备注你的姓名及其联系方式"></textarea></div>
+          </div>
+        </div>
+
+		
+         {yun:}if $paytype.alipay{/yun}
+         <div class="pay_f_list">
+          <label><i class="pay_f_list_zfb"></i><span class="pay_f_list_box">支付宝支付 </span>
+            <input type='radio' name='paytype' value='alipay' onclick="paycheck('alipay');" class="pay_f_list_radio">
+          </label>
+        </div>
+            {yun:}/if{/yun}  
+             {yun:}if $paytype.bank{/yun}
+         <div class="pay_f_list">
+          <label><i class="pay_f_list_yl"></i><span class="pay_f_list_box">银行汇款 </span>
+            <input type='radio' name="paytype" value="bank" onclick="paycheck('bank');" class="pay_f_list_radio">
+          </label>
+        </div>
+        
+        <div class="paybank item" {yun:}if $paytype.alipay=='1'{/yun}style="display:none"{yun:}/if{/yun}>                
+   <div class="paybank_tip"><span class="com_remind">汇款前请仔细核对银行帐号</span></div>
+    <div class=admin_note2 >
+      <div class="my_table_msg">
+       
+        {yun:}if is_array($banks){/yun}
+        {yun:}foreach item=blist from=$banks{/yun}
+         <div class="pay_bank_list">
+         <div class="">{yun:}$blist.bank_name{/yun}</div>
+        <div class="">{yun:}$blist.name{/yun}</div>
+         <div class="">{yun:}$blist.bank_number{/yun}</div>
+        <div class="">{yun:}$blist.bank_address{/yun}</div>
+        </div>
+        {yun:}/foreach{/yun}
+        {yun:}else{/yun}
+       <div class="wap_member_no">暂未添加银行</div>
+        {yun:}/if{/yun}
+      </div>
+        <div class="paybank_tip">填写汇款凭证：</div>
+      <div class="my_table_msg">
+      <div class="paybank_hk_list">
+        	<div class="paybank_name">汇款银行</div>
+          <div class=""><input type="text" id="bank_name" name="bank_name" class="paybank_hk_text" value="" placeholder="如：中国银行+沭阳开发区支行" /></div>
+		</div>
+		  <div class="paybank_hk_list">
+        <div class="paybank_name">汇入账号</div>
+		<div class=""><input type="text" id="bank_number" name="bank_number" class="paybank_hk_text" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" value="" /></div>
+		</div>
+          <div class="paybank_hk_list">
+        <div class="paybank_name">汇款金额</div>
+		<div class=""><input type="text" id="bank_price" name="bank_price" class="paybank_hk_text" value="" /></div>
+        </div>
+          <div class="paybank_hk_list">
+        <div class="paybank_name">汇款时间</div>
+		<div class=""><input type="text" id="bank_time" name="bank_time"class="paybank_hk_text" />
+					  </div>
+                      </div>
+                        <div class="paybank_hk_list">
+				
+		<div class="paybank_name">汇款单</div>
+		<div class=""><div class="paybank_hk_file_box"><i class="paybank_hk_file_icon"></i>上传汇款单<input type="file" name="order_pic" class="paybank_hk_file" /></div>
+				</div>
+				  </div>
+				</div> 
+				</div></div>
+            {yun:}/if{/yun}
+		{yun:}if $paytype.alipay||$paytype.bank{/yun}	
+      <div class="pay_com_list">
+        <div class="pay_com_lsit_right">
+          <input type="submit" value="确认支付" name=nextstep  class="pay_choose_btn_01">
+        </div>
+      </div>
+	  {yun:}else{/yun} 
+	  <div class="pay_com_list">
+        <div class="pay_com_lsit_right">
+          <span>网站已关闭支付功能，请联系管理员！</span>
+        </div>
+      </div>
+	  {yun:}/if{/yun} 
+  </form>
+  
+  {yun:}elseif $smarty.post.usertype=="pay"{/yun} <!------------------充值金额--------------- -->
+  <form action="index.php?c=dingdan" method="post" onsubmit="return pay_form('pay');"  id="paymentform">
+    <div class="yun_wap_addresume_box_group">
+        <div class="yun_wap_addresume_box_label"> 充值金额 <span class="resume-cont_wate_bj">*</span> </div>
+        <div class="yun_wap_addresume_box_control">
+        
+        <input type="hidden" name="pay_type" value="{yun:}$smarty.post.usertype{/yun}"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"/>
+          <input type="text" name="money_int" id="com_vip_price" size="20" value="" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" class="yun_wap_pay_text">
+          <input type="hidden" name="price" value="1" >
+        </div>
+      </div>
+       
+       <div class="yun_wap_addresume_box_group">
+          <div class="yun_wap_addresume_box_label"> 充值备注 </div>
+          <div class="yun_wap_addresume_box_control">
+           <div class="yun_wap_addresume_box_control_box"> <textarea name="remark" id='remark'  wrap="physical" class="com_textarea_pay" placeholder="请备注你的姓名及其联系方式"></textarea></div>
+          </div>
+        </div>
+
+		 
+         {yun:}if $paytype.alipay{/yun}
+         <div class="pay_f_list">
+          <label><i class="pay_f_list_zfb"></i><span class="pay_f_list_box">支付宝支付 </span>
+            <input type='radio' name='paytype' value='alipay'  onclick="paycheck('alipay');"class="pay_f_list_radio">
+          </label>
+        </div>
+            {yun:}/if{/yun}  
+             {yun:}if $paytype.bank{/yun}
+         <div class="pay_f_list">
+          <label><i class="pay_f_list_yl"></i><span class="pay_f_list_box">银行汇款 </span>
+            <input type='radio' name="paytype" value="bank" onclick="paycheck('bank');" class="pay_f_list_radio">
+          </label>
+        </div>
+        
+        <div class="paybank item" {yun:}if $paytype.alipay=='1'{/yun}style="display:none"{yun:}/if{/yun}>                
+    <div class="paybank_tip"><span class="com_remind">汇款前请仔细核对银行帐号</span></div>
+    <div class=admin_note2 >
+      <div  class="my_table_msg">
+       
+        {yun:}if is_array($banks){/yun}
+        {yun:}foreach item=blist from=$banks{/yun}
+         <div class="pay_bank_list">
+         <div class="">{yun:}$blist.bank_name{/yun}</div>
+        <div class="">{yun:}$blist.name{/yun}</div>
+         <div class="">{yun:}$blist.bank_number{/yun}</div>
+        <div class="">{yun:}$blist.bank_address{/yun}</div>
+        </div>
+        {yun:}/foreach{/yun}
+        {yun:}else{/yun}
+         <div class="wap_member_no">暂未添加银行 </div>
+        {yun:}/if{/yun}
+      </div>
+        <div class="paybank_tip">填写汇款凭证：</div>
+      <div class="my_table_msg">
+      <div class="paybank_hk_list">
+        	<div class="paybank_name">汇款银行</div>
+          <div class=""><input type="text" id="bank_name" name="bank_name" class="paybank_hk_text" value="" placeholder="如：中国银行+沭阳开发区支行" /></div>
+		</div>
+		  <div class="paybank_hk_list">
+        <div class="paybank_name">汇入账号</div>
+		<div class=""><input type="text" id="bank_number" name="bank_number" class="paybank_hk_text" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" value="" /></div>
+		</div>
+          <div class="paybank_hk_list">
+        <div class="paybank_name">汇款金额</div>
+		<div class=""><input type="text" id="bank_price" name="bank_price" class="paybank_hk_text" value="" /></div>
+        </div>
+          <div class="paybank_hk_list">
+        <div class="paybank_name">汇款时间</div>
+		<div class=""><input type="text" id="bank_time" name="bank_time"class="paybank_hk_text" />
+					  </div>
+                      </div>
+                        <div class="paybank_hk_list">
+				
+		<div class="paybank_name">汇款单</div>
+		<div class=""><div class="paybank_hk_file_box"><i class="paybank_hk_file_icon"></i>上传汇款单<input type="file" name="order_pic" class="paybank_hk_file" /></div>
+				</div>
+				  </div>
+				</div> 
+				</div></div>
+            {yun:}/if{/yun}
+		{yun:}if $paytype.alipay||$paytype.bank{/yun}	
+      <div class="pay_com_list">
+        <div class="pay_com_lsit_right">
+          <input type="submit" value="确认支付" name=nextstep  class="pay_choose_btn_01">
+        </div>
+      </div>
+	  {yun:}else{/yun} 
+	  <div class="pay_com_list">
+        <div class="pay_com_lsit_right">
+          <span>网站已关闭支付功能，请联系管理员！</span>
+        </div>
+      </div>
+	  {yun:}/if{/yun} 
+  </form>
+  
+  {yun:}elseif $smarty.post.usertype=="service"{/yun} <!--------------增值服务----------- -->
+  
+  {yun:}if $smarty.post.id {/yun}
+  <form action="index.php?c=dingdan" method="post" onsubmit="return pay_form('service')"  id="paymentform">
+		<div class="yun_wap_addresume_box_group">
+	        <div class="yun_wap_addresume_box_label"> 买增值包 <span class="resume-cont_wate_bj">*</span> </div>
+	        <div class="yun_wap_addresume_box_control">
+	        	{yun:}$service.name{/yun} -- {yun:}$rows.service_price{/yun}元套餐
+	        	<input type="hidden" name="comservice" id="comservice" value="{yun:}$rows.id{/yun}">
+	        	<input type="hidden" name="dkprice" id="dkprice" value="{yun:}$smarty.post.dkprice{/yun}">
+	        	<input type="hidden" name="dkjf" id="dkjf" value="{yun:}$smarty.post.dkjf{/yun}">
+	        </div>
+      	</div>
+        <div class="yun_wap_addresume_box_group">
+	        <div class="yun_wap_addresume_box_label"> 应付金额 </div>
+	        <div class="yun_wap_addresume_box_control">
+				<span id="span_com_vip_price" class="pay_com_lsit_je">
+					{yun:}if $discount.service_discount{/yun}
+						{yun:}$rows.service_price*$discount.service_discount*0.01{/yun}
+					{yun:}else{/yun}
+						{yun:}$rows.service_price{/yun}
+					{yun:}/if{/yun}
+				</span> 元				
+				<input type="hidden" name="price" size="10"  id="com_vip_price" value="{yun:}if $discount.service_discount{/yun}{yun:}$rows.service_price*$discount.service_discount*0.01{/yun}{yun:}else{/yun}{yun:}$rows.service_price{/yun}{yun:}/if{/yun}">
+	        </div>
+      	</div>
+		
+		{yun:}if $smarty.post.dkprice{/yun}
+		<div class="yun_wap_addresume_box_group">
+	        <div class="yun_wap_addresume_box_label">实付金额</div>
+	        <div class="yun_wap_addresume_box_control">
+				<span id="span_com_vip_price" class="pay_com_lsit_je">
+					{yun:}$smarty.post.dkprice{/yun}
+				</span> 元				
+				  
+	        </div>
+      	</div>
+		<div class="yun_wap_addresume_box_group">
+	        <div class="yun_wap_addresume_box_label">抵扣{yun:}$config.integral_pricename{/yun}</div>
+	        <div class="yun_wap_addresume_box_control">
+ 				{yun:}$smarty.post.dkjf{/yun}
+	        </div>
+      	</div>
+		{yun:}/if{/yun}	
+		
+		<div class="yun_wap_addresume_box_group">
+          <div class="yun_wap_addresume_box_label"> 充值备注  </div>
+          <div class="yun_wap_addresume_box_control">
+           <div class="yun_wap_addresume_box_control_box"> <textarea name="remark" id='remark'  wrap="physical" class="com_textarea_pay" placeholder="请备注你的姓名及其联系方式"></textarea></div>
+          </div>
+        </div>
+
+		
+         {yun:}if $paytype.alipay{/yun}
+         <div class="pay_f_list">
+          <label><i class="pay_f_list_zfb"></i><span class="pay_f_list_box">支付宝支付 </span>
+            <input type='radio' name='paytype' value='alipay' onclick="paycheck('alipay');" class="pay_f_list_radio">
+          </label>
+        </div>
+            {yun:}/if{/yun}  
+             {yun:}if $paytype.bank{/yun}
+         <div class="pay_f_list">
+          <label><i class="pay_f_list_yl"></i><span class="pay_f_list_box">银行汇款 </span>
+            <input type='radio' name="paytype" value="bank" onclick="paycheck('bank');" class="pay_f_list_radio">
+          </label>
+        </div>
+        
+        <div class="paybank item" {yun:}if $paytype.alipay=='1'{/yun}style="display:none"{yun:}/if{/yun}>                
+     <div class="paybank_tip"><span class="com_remind">汇款前请仔细核对银行帐号</span></div>
+    <div class=admin_note2 >
+      <div class="my_table_msg">
+       
+        {yun:}if is_array($banks){/yun}
+        {yun:}foreach item=blist from=$banks{/yun}
+        <div class="pay_bank_list">
+         <div class="">{yun:}$blist.bank_name{/yun}</div>
+        <div class="">{yun:}$blist.name{/yun}</div>
+         <div class="">{yun:}$blist.bank_number{/yun}</div>
+        <div class="">{yun:}$blist.bank_address{/yun}</div>
+        </div>
+        {yun:}/foreach{/yun}
+        {yun:}else{/yun}
+        <div class="wap_member_no">暂未添加银行</div>
+        {yun:}/if{/yun}
+      </div>
+        <div class="paybank_tip">填写汇款凭证：</div>
+      <div class="my_table_msg">
+      <div class="paybank_hk_list">
+        	<div class="paybank_name">汇款银行</div>
+          <div class=""><input type="text" id="bank_name" name="bank_name" class="paybank_hk_text" value="" placeholder="如：中国银行+沭阳开发区支行" /></div>
+		</div>
+		  <div class="paybank_hk_list">
+        <div class="paybank_name">汇入账号</div>
+		<div class=""><input type="text" id="bank_number" name="bank_number" class="paybank_hk_text" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" value="" /></div>
+		</div>
+          <div class="paybank_hk_list">
+        <div class="paybank_name">汇款金额</div>
+		<div class=""><input type="text" id="bank_price" name="bank_price" class="paybank_hk_text" value="{yun:}if $discount.service_discount{/yun}{yun:}$rows.service_price*$discount.service_discount*0.01{/yun}{yun:}else{/yun}{yun:}$rows.service_price{/yun}{yun:}/if{/yun}" /></div>
+        </div>
+          <div class="paybank_hk_list">
+        <div class="paybank_name">汇款时间</div>
+		<div class=""><input type="text" id="bank_time" name="bank_time"class="paybank_hk_text" />
+					  </div>
+                      </div>
+                        <div class="paybank_hk_list">
+				
+		<div class="paybank_name">汇款单</div>
+		<div class=""><div class="paybank_hk_file_box"><i class="paybank_hk_file_icon"></i>上传汇款单<input type="file" name="order_pic" class="paybank_hk_file" /></div>
+				</div>
+				  </div>
+				</div> 
+				</div></div>
+            {yun:}/if{/yun}
+		{yun:}if $paytype.alipay||$paytype.bank{/yun}	
+      <div class="pay_com_list">
+        <div class="pay_com_lsit_right">
+          <input type="submit" value="确认支付" name=nextstep  class="pay_choose_btn_01">
+        </div>
+      </div>
+	  {yun:}else{/yun} 
+	  <div class="pay_com_list">
+        <div class="pay_com_lsit_right">
+          <span>网站已关闭支付功能，请联系管理员！</span>
+        </div>
+      </div>
+	  {yun:}/if{/yun} 
+  </form>
+  {yun:}/if{/yun}
+  {yun:}/if{/yun}
+  {yun:}/if{/yun}
+  </div>
+  
+</section>
+</div>
+</div>
+<script>
+
+
+function paycheck(type){
+	var type; 
+	if(type=="bank"){
+		$(".paybank").show();
+	}else{
+		$(".paybank").hide(); 
+	}
+}
+</script>
+{yun:}include file="$wapstyle/footer.htm"{/yun} 

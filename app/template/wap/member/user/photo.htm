@@ -1,0 +1,33 @@
+{yun:}include file="$wapstyle/member/header.htm"{/yun} 
+<script>     
+function photo(){ 
+	if($.trim($("#pic").val())==''&&$("#imghead")[0].src==''){
+		layermsg('请上传头像！');return false;
+	}
+}	
+</script>
+
+<section class="resume_mangage"> 
+<div class="clear"></div>
+<div class="wap_member_comp_h1"><span>上传头像</span></div>
+<div class="yun_wap_addresume_box">
+	<form method="post" action=""  onsubmit="return photo();" enctype="multipart/form-data">
+	    <div class="yun_wap_addresume_box_group">
+	        <div class="yun_wap_addresume_box_label"><span class="resume-cont_wate_bj">*</span> 上传头像  </div>
+	        <div class="yun_wap_addresume_box_control">
+	          <input type="file" name="pic" id="pic" accept="image/*" >
+	    	</div>
+	    </div>
+		<div class="yun_wap_addresume_box_group"{yun:}if !$user.resume_photo{/yun} style="display:none;"{yun:}/if{/yun}> 
+      		<img src="{yun:}$user.resume_photo{/yun}" id="imghead" width="230" height="300"/>
+      	</div>
+      	<input type="hidden" id="img" value="1">
+      	
+      	<div class="yun_wap_addresume_box_group" style="background: transparent; border: none;">
+        	<input type="submit" name="submit" value="保存" class="reinputText2">
+      	</div>
+    </form>
+  </div>
+</section>
+<div class="clear"></div>
+{yun:}include file="$wapstyle/footer.htm"{/yun} 

@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<form class="layui-form">
+<div class="infoboxp">
+<div class="tabs_info">
+	<ul>
+		<li><a href="index.php?m=admin_comset">企业设置</a></li>
+		<li><a href="index.php?m=admin_comset&c=logo">头像设置</a></li> 
+		<li><a href="index.php?m=admin_comset&c=set">{yun:}$config.integral_pricename{/yun}设置</a></li> 
+		<li><a href="index.php?m=admin_comset&c=comspend">消费设置</a></li>  
+		<li class="curr"><a href="index.php?m=admin_comset&c=rating">套餐设置</a></li>  
+	</ul>
+</div>
+    
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">该页面展示了网站企业套餐设置管理</div>
+</div>
+</div>
+<div class="clear"></div>
+<div class="main_tag mt10">
+<div class="tag_box"><div>
+<table width="100%" class="table_form">
+  <tr class="admin_table_trbg">
+         <th width="260" bgcolor="#f0f6fb"><span class="admin_bold">参数说明</span></th>
+          <td bgcolor="#f0f6fb"><span class="admin_bold">参数值</span></td>
+    </tr>
+     <tr class="admin_table_trbg">
+    <th width="220">企业会员模式：</th>
+    <td>
+      
+      <div class="layui-form-item">
+        <div class="layui-input-block">
+          <input type="radio" name="com_vip_type" lay-filter="com_vip_type" value="1" title="时间模式" {yun:}if $config.com_vip_type==1{/yun}checked{yun:}/if{/yun}>
+          <input type="radio" name="com_vip_type" lay-filter="com_vip_type" value="2" title="套餐模式" {yun:}if $config.com_vip_type==2{/yun}checked{yun:}/if{/yun}>
+          <input type="radio" name="com_vip_type" lay-filter="com_vip_type" value="0" title="同时开启" {yun:}if $config.com_vip_type==0{/yun}checked{yun:}/if{/yun}>
+          <span class="admin_web_tip">注:重新设置后，原有企业会员不受影响。</span>
+        </div>
+      </div>
+         
+    </td>
+  </tr>
+
+
+
+    <tr>
+    <th width="220">积分抵扣模式：</th>
+    <td>
+      
+	<div class="layui-form-item">
+        <div class="layui-input-block">
+			<input type="radio" name="com_integral_online" value="1" title="开启" {yun:}if $config.com_integral_online==1{/yun}checked{yun:}/if{/yun}>
+			<input type="radio" name="com_integral_online" value="2" title="关闭" {yun:}if $config.com_integral_online==2{/yun}checked{yun:}/if{/yun}>
+			<span class="admin_web_tip">注:开启后，在企业会员到期或者套餐使用完的情况下，会员{yun:}$config.integral_pricename{/yun}可用于职位刷新、简历下载等企业消费的金额抵扣</span>
+        </div>
+      </div>
+       
+        </td>
+  </tr>
+    <tr class="admin_table_trbg">
+    <th width="220">企业注册默认等级：</th>
+        {yun:}if is_array($qy_rows){/yun}
+    <td>
+      
+      <div class="layui-form-item">
+        <div class="layui-input-block">
+          {yun:}foreach item=v from=$qy_rows{/yun}
+          <input type="radio" name="com_rating" value="{yun:}$v.id{/yun}" title="{yun:}$v.name{/yun}" {yun:}if $config.com_rating==$v.id{/yun}checked{yun:}/if{/yun}>
+          {yun:}/foreach{/yun}
+        </div>
+      </div>
+        </td>
+        {yun:}else{/yun}
+          <td>
+          <div class="iradio_flat_height">
+          暂无等级，<a href="index.php?m=userconfig&c=comclass" style="color:red;">添加会员等级</a>
+            <input type="hidden" name="com_rating" value="0">
+            </div>
+          </td>
+        {yun:}/if{/yun}
+  </tr>
+  <tr>
+    <th width="220">查看投递简历：</th>
+    <td>
+      <div class="layui-form-item">
+        <div class="layui-input-block">
+          <input type="radio" name="com_look" value="1" title="收费" {yun:}if $config.com_look==1{/yun}checked{yun:}/if{/yun}>
+          <input type="radio" name="com_look" value="0" title="不收费" {yun:}if $config.com_look==0{/yun}checked{yun:}/if{/yun}>
+          </div>
+      </div>
+    </td>
+  </tr>
+<tr>
+  <tr class="admin_table_trbg">
+    <td colspan="2" align="center">
+        <input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+        <input class="layui-btn layui-btn-normal" id="mconfig" type="button" name="config" value="提交" />&nbsp;&nbsp;
+        <input class="layui-btn layui-btn-normal" type="reset" value="重置" /></td>
+  </tr>
+</table>
+</div>
+
+</div>
+</div>
+<script>
+  layui.use(['form'], function(){
+    var form = layui.form
+    ,$ = layui.$;
+
+    form.on('radio(com_vip_type)', function(data){
+      if(data.value == 2){
+        $("#timeVipLimit").hide();
+      }
+      else{
+        $("#timeVipLimit").show();
+      }
+    })
+  });
+$(function(){
+  $("#mconfig").click(function(){
+    $.post("index.php?m=admin_comset&c=save",{
+      config : $("#mconfig").val(),
+      com_rating : $("input[name=com_rating]:checked").val(),
+      com_integral_online : $("input[name=com_integral_online]:checked").val(),
+      com_vip_type : $("input[name=com_vip_type]:checked").val(),
+
+      // com_timevip_maxaddjob : $("#com_timevip_maxaddjob").val(),
+      // com_timevip_maxresume : $("#com_timevip_maxresume").val(),
+      // com_timevip_maxinterview : $("#com_timevip_maxinterview").val(),
+      // com_timevip_maxrefreshjob : $("#com_timevip_maxrefreshjob").val(),
+      // com_timevip_maxaddpart : $("#com_timevip_maxaddpart").val(),
+      // com_timevip_maxrefreshpart : $("#com_timevip_maxrefreshpart").val(),
+      // com_timevip_maxaddltjob : $("#com_timevip_maxaddltjob").val(),
+      // com_timevip_maxltresume : $("#com_timevip_maxltresume").val(),
+      // com_timevip_maxrefreshltjob : $("#com_timevip_maxrefreshltjob").val(),
+      // com_timevip_maxzph : $("#com_timevip_maxzph").val(),
+
+      isDayActionAllCheck : $("#isDayActionAllCheck").attr('checked') ? 1 : 0,
+      isDayActionZeroCostCheck : $("#isDayActionZeroCostCheck").attr('checked') ? 1 : 0,
+      com_look : $("input[name=com_look]:checked").val(),
+      
+      pytoken:$("#pytoken").val()
+    },function(data,textStatus){
+      config_msg(data);
+    });
+  });
+})
+</script></div>
+</form>
+</body>
+</html>

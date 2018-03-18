@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet">
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+
+<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<div id="infobox2"  style="display:none; width: 390px; "> 
+    
+      <form  class="layui-form" action="index.php?m=height_user&c=status" target="supportiframe" method="post" id="formstatus">
+    	 <table cellspacing='1' cellpadding='1' class="admin_examine_table">
+     <tr>
+    <th width="80">审核操作：</th>
+     <td align="left">
+       <!--<div class="admin_examine_right">
+        <label for="status0"> <span class="admin_examine_table_s"><input type="radio" name="status" value="1" id="status0" >未审核</span></label>
+        <label for="status1"> <span class="admin_examine_table_s"><input type="radio" name="status" value="2" id="status1" >正常</span></label>
+        <label for="status2"> <span class="admin_examine_table_s"><input type="radio" name="status" value="3" id="status2">未通过</span></label></div>-->
+		<div class="layui-form-item">
+            <div class="layui-input-block">
+                    <input name="status" id="status1" value="1" title="未审核" type="radio"/>
+					<input name="status" id="status2" value="2" title="正常" type="radio"/>
+					<input name="status" id="status3" value="3" title="未通过" type="radio"/>
+                 </div>
+           </div>	
+		 </td>
+        </tr>
+       <tr>
+            <th>审核说明：</th>
+        <td><textarea id="statusbody" name="statusbody" class="admin_explain_textarea"></textarea></td>
+       </tr>
+        <tr>
+         <td colspan='2' align="center"> <input type="submit"  value='确认' class="admin_examine_bth">
+         <input type="button"  onClick="layer.closeAll();" class="admin_examine_bth_qx" value='取消'></div>
+		  </tr>
+      </table>
+		<input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+        <input name="pid" value="0" type="hidden">
+      </form>
+
+</div>
+
+
+<div class="infoboxp"> 
+
+<div class="admin_new_tip">
+<a href="javascript:;" class="admin_new_tip_close"></a>
+<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+<div class="admin_new_tip_list_cont">
+<div class="admin_new_tip_list">该页面展示了网站所有的高级人才管理信息，可对高级人才进行审核，删除操作。</div>
+<div class="admin_new_tip_list">可输入名称关键字进行搜索，也可进行详细的高级搜索。</div>
+</div>
+</div>
+
+<div class="clear"></div>
+
+<div class="admin_new_search_box"> 
+  <form action="index.php" name="myform" method="get"> 
+        <input name="m" value="height_user" type="hidden"/>
+		<input type="hidden" name="searchsalary" value="{yun:}$smarty.get.searchsalary{/yun}"/>
+		<input type="hidden" name="searchtype" value="{yun:}$smarty.get.searchtype{/yun}"/>
+		<input type="hidden" name="searchreport" value="{yun:}$smarty.get.searchreport{/yun}"/>
+		<input type="hidden" name="rec" value="{yun:}$smarty.get.rec{/yun}"/>
+		<input type="hidden" name="status" value="{yun:}$smarty.get.status{/yun}"/>
+	<div class="admin_new_search_name">搜索类型：</div>
+   <div class="admin_Filter_text formselect"  did='dsearchrname'>
+		  <input type="button" value="{yun:}if $smarty.get.searchrname=='1'||$smarty.get.searchrname==''{/yun}用户名{yun:}else{/yun}简历名称{yun:}/if{/yun}" class="admin_Filter_but"  id="bsearchrname">
+		  <input type="hidden" id='searchrname' value="{yun:}if $smarty.get.searchrname{/yun}{yun:}$smarty.get.searchrname{/yun}{yun:}else{/yun}1{yun:}/if{/yun}" name='searchrname'>
+		  <div class="admin_Filter_text_box" style="display:none" id='dsearchrname'>
+			  <ul>
+			  <li><a href="javascript:void(0)" onClick="formselect('1','searchrname','用户名')">用户名</a></li>
+			  <li><a href="javascript:void(0)" onClick="formselect('2','searchrname','简历名称')">简历名称</a></li> 
+			  </ul>  
+		  </div>
+		</div>
+        <input class="admin_Filter_search" type="text" name="keyword"  size="25"/>
+        <input class="admin_Filter_bth" type="submit" name="news_search" value="检索"/>
+	
+	
+	<a  href="javascript:void(0)" onclick="$('.admin_screenlist_box').toggle();"   class="admin_new_search_gj">高级搜索</a></form>
+
+
+  
+  {yun:}include file="admin/admin_search.htm"{/yun}
+  </div>
+<div class="clear"></div> 
+<div class="table-list">
+<div class="admin_table_border">
+      <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+      <form action="index.php" name="myform" method="get" target="supportiframe" id='myform'>
+      <input type="hidden" name="pytoken"  id='pytoken' value="{yun:}$pytoken{/yun}">
+        <input name="m" value="height_user" type="hidden"/>
+        <input name="c" value="del" type="hidden"/>
+        <table width="100%">
+          <thead>
+            <tr class="admin_table_top">
+              <th width="3%"><label for="chkall">
+                <input type="checkbox" id='chkAll'  onclick='CheckAll(this.form)'/>
+                </label></th>
+              <th width="8%"> {yun:}if $smarty.get.t=="id" && $smarty.get.order=="asc"{/yun} <a href="{yun:}searchurl order=desc t=id m=height_user untype='order,t'{/yun}">简历编号<img src="images/sanj.jpg"/></a> {yun:}else{/yun} <a href="{yun:}searchurl order=asc t=id m=height_user untype='order,t'{/yun}">简历编号<img src="images/sanj2.jpg"/></a> {yun:}/if{/yun} </th>
+              <th align="left" width="8%">用户名</th>
+              <th align="left" width="150">简历名称</th>
+              <th align="left" width="200">意向职位</th>
+              <th>工作地点</th>
+              <th>待遇要求</th>
+              <th>工作性质</th>
+              <th>到岗时间</th>
+              <th>审核状态</th>
+              <th>推荐</th>
+              <th> {yun:}if $smarty.get.t=="time" && $smarty.get.order=="asc"{/yun} <a href="{yun:}searchurl order=desc t=time m=height_user untype='order,t'{/yun}">审核时间<img src="images/sanj.jpg"/></a> {yun:}else{/yun} <a href="{yun:}searchurl order=asc t=time m=height_user untype='order,t'{/yun}">审核时间<img src="images/sanj2.jpg"/></a> {yun:}/if{/yun} </th>
+              <th  class="admin_table_th_bg" >操作</th>
+            </tr>
+          </thead>
+          <tbody>
+          
+          {yun:}foreach item=v key=key from=$rows{/yun}
+          <tr align="center" {yun:}if ($key+1)%2=='0'{/yun}class="admin_com_td_bg"{yun:}/if{/yun} id="list{yun:}$v.id{/yun}">
+            <td><input type="checkbox" class="check_all" value="{yun:}$v.id{/yun}"  name='del[]' onclick='unselectall()' rel="del_chk" /></td>
+            <td align="left" class="td1" style="text-align:center;"><span>{yun:}$v.id{/yun}</span></td>
+            <td class="gd" align="left" >{yun:}$v.username{/yun}</td>
+            <td class="ud" align="left" ><a href="{yun:}url m=resume c=show id='`$v.id`' type=2 look=admin{/yun}" target="_blank" class="admin_cz_sc">{yun:}$v.name{/yun}</a></td>
+            <td class="od" align="left">{yun:}$v.jobname{/yun}</td>
+            <td class="gd">{yun:}$v.cityid_n{/yun}</td>
+            <td class="td">{yun:}if $v.minsalary&&$v.maxsalary{/yun}￥{yun:}$v.minsalary{/yun}-{yun:}$v.maxsalary{/yun}{yun:}else if $v.minsalary{/yun}￥{yun:}$v.minsalary{/yun}以上{yun:}else{/yun}面议{yun:}/if{/yun}</td>
+            <td>{yun:}$v.type_n{/yun}</td>
+            <td>{yun:}$v.report_n{/yun}</td>
+            <td>{yun:}if $v.height_status==2{/yun}<span class="admin_com_Audited">已审核</span>{yun:}elseif $v.height_status==1{/yun}<span class="admin_com_noAudited">未审核</span>{yun:}else{/yun}<span class="admin_com_tg">未通过</span>{yun:}/if{/yun}</td>
+            <td id="rec{yun:}$v.id{/yun}">{yun:}if $v.rec=="1"{/yun}<a href="javascript:void(0);" onClick="rec_up('index.php?m=height_user&c=recommend','{yun:}$v.id{/yun}','0','rec');"><img src="../config/ajax_img/doneico.gif"></a>{yun:}else{/yun}<a href="javascript:void(0);" onClick="rec_up('index.php?m=height_user&c=recommend','{yun:}$v.id{/yun}','1','rec');"><img src="../config/ajax_img/errorico.gif"></a>{yun:}/if{/yun} </td>
+            <td>{yun:}$v.status_time|date_format:"%Y-%m-%d"{/yun}</td>
+            <td>
+            <a href="javascript:void(0);" class="status admin_new_c_bth admin_new_c_bthsh" pid="{yun:}$v.id{/yun}" status="{yun:}$v.height_status{/yun}">审核</a>
+            <div class=" mt5"> <a href="{yun:}url m=resume c=show id='`$v.id`' type=2 look=admin{/yun}" class="admin_new_c_bth admin_new_c_bth_yl" target="_blank"> 预览</a> </div>
+            <div class=" mt5"> <a href="javascript:void(0)" onClick="layer_del('确定要删除？', 'index.php?m=height_user&c=del&del={yun:}$v.id{/yun}');" class="admin_new_c_bth admin_new_c_bth_sc">删除</a></div>
+             </td>
+          </tr>
+          {yun:}/foreach{/yun}
+          <tr style="background:#f1f1f1;">
+          <td align="center"><input type="checkbox" id='chkAll2' onclick='CheckAll2(this.form)' /></td>
+          <td colspan="3">
+          <label for="chkAll2">全选</label>&nbsp;
+            <input class="admin_button"  type="button" name="delsub" value="删除所选" onClick="return really('del[]')" />
+              &nbsp;&nbsp;
+              <input class="admin_button"  type="button" name="delsub" value="批量审核" onClick="audall();" /></td>
+            <td colspan="10" class="digg">{yun:}$pagenav{/yun}</td>
+          </tr>
+          </tbody>
+          
+        </table>
+      </form>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  layui.use(['layer', 'form'], function(){
+    var layer = layui.layer
+    ,form = layui.form
+    ,$ = layui.$;
+  });
+
+function audall(){
+	var codewebarr="";
+	$(".check_all:checked").each(function(){ //由于复选框一般选中的是多个,所以可以循环输出
+		if(codewebarr==""){codewebarr=$(this).val();}else{codewebarr=codewebarr+","+$(this).val();}
+	});
+	if(codewebarr==""){
+		parent.layer.msg('您还未选择任何信息！', 2, 8);	return false;
+	}else{
+		$("input[name=pid]").val(codewebarr);
+ 		$("#statusbody").val('');
+		$("input[name='status']").attr('checked',false);
+		$.layer({
+			type : 1,
+			title :'批量审核', 
+			closeBtn : [0 , true],
+			border : [10 , 0.3 , '#000', true],
+			area : ['390px','240px'],
+			page : {dom :"#infobox2"}
+		});
+	}
+}
+$(function(){
+    $(".status").click(function(){
+		var pid=$(this).attr("pid");
+		var status=$(this).attr("status");
+		$("#status"+status).attr("checked",true);
+		 layui.use(['form'],function(){
+			var form = layui.form;
+			form.render();
+		});
+		$("input[name=pid]").val(pid);
+		var pytoken=$("#pytoken").val();
+		$.post("index.php?m=height_user&c=lockinfo",{pytoken:pytoken,pid:pid},function(msg){
+			$("#statusbody").val(msg);
+			$.layer({
+				type : 1,
+				title :'审核', 
+				closeBtn : [0 , true],
+				border : [10 , 0.3 , '#000', true],
+				area : ['390px','240px'],
+				page : {dom :"#infobox2"}
+			});
+		});
+	}); 
+}); 
+</script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta http-equiv="Cache-Control" content="no-cache"/>
+<title>{yun:}$config.sy_webname{/yun} -  手机人才网</title>
+<meta http-equiv="keywords" content="人才招聘,网络招聘,wap" />
+<meta http-equiv="description" content="人才招聘网wap网站" />
+<meta content="width=device-width, initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport" />
+<meta name="MobileOptimized" content="240" />
+<meta http-equiv="Expires" content="0" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1, maximum-scale=1, user-scalable=no" />
+<meta name="format-detection" content="telephone=no,email=no"/>
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/css.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/yun_wap_member.css?v={yun:}$config.cachecode{/yun}" type="text/css"/>
+<script src="{yun:}$wap_style{/yun}/js/prefixfree.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/layer/layer.m.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+</head>
+<body>
+
+<header>
+   <div class="header_bg"> <a class="hd-lbtn" href="{yun:}if $backurl{/yun}{yun:}$backurl{/yun}{yun:}else{/yun}javascript:history.back();{yun:}/if{/yun}"><i class="header_top_l iconfont"></i></a>
+    <div class="header_h1">手机上传</div>
+  </div>
+ </header>
+<div class="main_member_body">
+
+<style type="text/css">
+  .submit-ok{
+    color: #fff ;
+    background-color: #5cb85c;
+  }
+
+</style>
+<section class="resume_mangage"> 
+<div class="clear"></div>
+<div class="wap_member_comp_h1"><span>手机扫码拍照上传</span></div>
+<div class="yun_wap_addresume_box">
+  <iframe id="ifr" name="ifr" onload="wapreturnmsg('ifr');" style="display: none;"></iframe>
+	<form method="post"  target="ifr" action="index.php?c=upload&a=uploadimg_save&token={yun:}$token{/yun}"  onsubmit="return check_form_post();" enctype="multipart/form-data">
+		
+	    <div class="yun_wap_addresume_box_group">
+	        <div class="yun_wap_addresume_box_label"><span class="resume-cont_wate_bj">*</span> 上传图片  </div>
+	        <div class="yun_wap_addresume_box_control">
+	          <input type="file" name="pic" id="pic" accept="image/*" onchange="inputClick()" />
+	    	</div>
+	    </div>
+
+      {yun:}if $type == 2{/yun}
+      <div class="yun_wap_addresume_box_group">
+        <div class="yun_wap_addresume_box_label"><span class="resume-cont_wate_bj">*</span> 证件号码  </div>
+        <div class="yun_wap_addresume_box_control">
+          <input type="text" name="idcard" id="idcard" style="margin-top: 5px;"/>
+        </div>
+      </div>
+      {yun:}/if{/yun}
+
+		  <div class="yun_wap_addresume_box_group" id="preview" style="display:none;"> 
+        <span id="img_loading" style="display: none;">图片上传中...</span>
+    		<img src="" id="imghead" width="230" height="300"/>
+    	</div>
+  
+    	<input type="hidden" id="img" value="0">
+      	
+    	<div class="yun_wap_addresume_box_group" style="background: transparent; border: none;">
+      	<input type="submit" name="submit" id="submit" value="上传" class="reinputText2">
+    	</div>
+    </form>
+  </div>
+</section>
+<div class="clear"></div>
+</div>
+
+<script>
+//上传表单点击后触发
+function inputClick()
+{
+  var r= new FileReader();
+  var f=document.getElementById('pic').files[0];
+  r.readAsDataURL(f);
+  
+  var layer_index ;
+
+  r.onload=function  (e) {
+    //document.getElementById('imghead').src=this.result;
+    $("#imghead").attr('src', this.result);
+
+    layer.close(layer_index);
+    $("#img_loading").hide();
+    $("#preview").show();
+    $("#img").val(1);
+  };
+  
+  r.onloadstart = function(e){
+    layer_index = layer.open({
+      content: '加载图片中，请稍等', 
+      time: 5,
+      end : function(){}
+    });
+
+    $("#img_loading").show();
+    $("#preview").hide();
+    $("#img").val(0);
+  };
+
+  // if($("#submit").hasClass('submit-ok')){
+  //   $("#submit").removeClass('submit-ok');
+    // $("#submit").val('重新上传');
+  // }
+}
+
+function checkIdcard(num){
+    //身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X。
+   var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;  
+   if(reg.test(num) === false)  
+   {  
+       return  false;  
+   }  
+}
+
+function check_form_post()
+{
+  var img = $("#img").val();
+  if(img == 0){
+    layermsg('请上传图片');
+    return false;
+  }
+
+  {yun:}if $type == 2{/yun}
+  var idcard = $('#idcard').val();
+  if(idcard == ''){
+    layermsg('请填写证件号码');
+    return false;
+  }
+
+  if(checkIdcard($.trim(idcard)) ==false){
+    layermsg('请填写正确身份证号码！');
+    return false;
+  }
+  {yun:}/if{/yun}
+
+  layermsg('上传中..', 5);
+  return true;
+}
+
+function wapreturnmsg()
+{
+  layer.closeAll();
+
+  var iHtml = $("#ifr").contents().find("body").html();
+  iHtml = eval('(' + iHtml + ')');
+  if(iHtml.status == 1){
+    layermsg('上传成功！');
+
+    // $("#submit").addClass('submit-ok');
+    $("#submit").val('上传成功！');
+  }
+  else if(iHtml.msg){
+    layermsg(iHtml.msg);
+  }
+  else{
+    layermsg('上传失败！');
+  }
+}
+</script>
+{yun:}include file="$wapstyle/footer.htm"{/yun} 

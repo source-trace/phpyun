@@ -1,0 +1,114 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<div class="w1000">
+<div class="admin_mainbody"> 
+{yun:}include file="$comstyle/left.htm"{/yun}
+  <div class=right_box>
+    <div class=admincont_box>
+    <div class="clear"></div>
+    <div class="com_tit"><span class="com_tit_span">购买{yun:}$config.integral_pricename{/yun}</span></div>
+    <div class="clear"></div>
+      <div class="com_body">
+         <div class="clear"></div>
+          <div class="admin_new_tip ">
+            <div class="admin_new_tit"><i class="admin_new_tit_icon"></i>温馨提示</div>
+            <div class="admin_new_tip_list_cont">
+              <div class="admin_new_tip_list"> 当前{yun:}$config.integral_pricename{/yun}兑换比为1元={yun:}$config.integral_proportion{/yun}{yun:}$config.integral_priceunit{/yun}{yun:}$config.integral_pricename{/yun}{yun:}if $config.integral_min_recharge>0{/yun}，单次最低充值{yun:}$config.integral_min_recharge{/yun}{yun:}$config.integral_pricename{/yun}。{yun:}/if{/yun} </div>
+            </div>
+          </div>
+          
+        <iframe id="fdingdan"  name="fdingdan" onload="returnmessage('fdingdan');" style="display:none"></iframe>
+        <form id="alipayment" name="alipayment" target="fdingdan" action="index.php?c=pay&act=dingdan" method="post" onsubmit="return pay_form();">
+        <input type="hidden" id="integral" name="price_int" value="100" />
+        <div class="payment_list">
+        <div class="payment_list_s">充值数量：</div>
+        <div class="payment_list_r">
+        <span class="payment_list_text payment_list_cur" data-id="100">
+        <i class="payment_list_text_icon"></i>100{yun:}$config.integral_pricename{/yun}
+        </span>
+        <span class="payment_list_text" data-id="500">
+        <i class="payment_list_text_icon"></i>500{yun:}$config.integral_pricename{/yun}
+        </span>
+        <span class="payment_list_text" data-id="1000">
+        <i class="payment_list_text_icon"></i>1000{yun:}$config.integral_pricename{/yun}
+        </span>
+        <span class="payment_list_text" data-id="2000">
+        <i class="payment_list_text_icon"></i>2000{yun:}$config.integral_pricename{/yun}
+        </span>
+        <div class="payment_list_zdy"><input type="text" id="autointegral" onBlur="comautointegral();" class="payment_list_input"placeholder="自定义" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" maxlength='6'/>{yun:}$config.integral_pricename{/yun}</div>
+        </div>
+        <div class="payment_list"><div class="payment_list_s" style="line-height:40px;">金额：</div><div class="payment_list_r"><span class="payintegral" id="payintegral">100</span>元<input type="hidden" name="price" size="10"  id="user_vip_price"></div></div>
+	    <div class="payment_list"><div class="payment_list_s" style="line-height:92px;">支付备注：</div><div class="payment_list_r"><textarea name="remark" id="remark" cols="40" class="payment_list_textarea"></textarea></div></div>
+       
+        <div class="payment_list coupon"><div class="payment_list_s">&nbsp;</div><div class="payment_list_r">
+	    <input type="submit" name="submit" class="payment_list_other" value="提交订单">
+	    </div>
+        </div>
+        </div>
+	    </form>
+	
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+var weburl="{yun:}$config.sy_weburl{/yun}";
+{yun:}if $smarty.get.id&&$smarty.get.type=='vip'{/yun}
+$(document).ready(function(){
+	check_rating_coupon('{yun:}$smarty.get.id{/yun}');
+});
+{yun:}/if{/yun}
+function comautointegral(){
+	var proportion='{yun:}$config.integral_proportion{/yun}';
+	var integral=parseInt($("#autointegral").val());
+	if(integral){
+		var min_recharge='{yun:}$config.integral_min_recharge{/yun}';
+		if(min_recharge>0&&integral<min_recharge){
+			integral=min_recharge;
+			$("#autointegral").val(integral);
+			$("#integral").val(integral);
+		}else{
+			$("#autointegral").val(integral);
+			$("#integral").val(integral);
+		}
+		var price=integral/proportion;
+		$("#user_vip_price").val(price);
+		$("#payintegral").html(price);
+		$(".payment_list_text").removeClass('payment_list_cur');
+	}
+}
+$(document).ready(function(){
+	var proportion='{yun:}$config.integral_proportion{/yun}';
+	if($.trim($("#integral").val())){
+		var integral=$.trim($("#integral").val());
+		var price=integral/proportion;
+		$("#user_vip_price").val(price);
+		$("#payintegral").html(price);
+	}
+	$(".payment_list_text").click(function() {
+		var val=$(this).attr('data-id');
+		$(".payment_list_text").removeClass('payment_list_cur');
+		$(this).addClass('payment_list_cur');
+		$("#autointegral").val('');
+        $("#integral").val(val);
+		var price=val/proportion;
+		$("#user_vip_price").val(price);
+		$("#payintegral").html(price);
+    });
+	$("#autointegral").keyup(function(e) {
+		if($(this).val()){
+			$(".payment_list_text").removeClass('payment_list_cur');
+			$("#integral").val($(this).val());
+			var price=$(this).val()/proportion;
+			$("#user_vip_price").val(price);
+			$("#payintegral").html(price);
+		}else{
+			$("#integral").val('0');
+			$("#user_vip_price").val('0');
+			$("#payintegral").html('0');
+		}
+	});
+});
+</script> 
+<input name='integral_min_recharge' value="{yun:}$config.integral_min_recharge{/yun}" type="hidden"/>
+{yun:}include file="$comstyle/footer.htm"{/yun}

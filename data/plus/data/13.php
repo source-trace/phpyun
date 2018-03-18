@@ -1,0 +1,9 @@
+<?php 
+$data=array('0'=>array('name'=>'李四','url'=>'http://www.job.com/tiny/index.php?c=show&id=243','sex'=>'男','exp'=>'3年以上','job'=>'店长','mobile'=>'13677778888','describe'=>'销售很好','time'=>'2016-01-23')
+,'1'=>array('name'=>'张三丰','url'=>'http://www.job.com/tiny/index.php?c=show&id=242','sex'=>'男','exp'=>'3年以上','job'=>'销售','mobile'=>'13677778888','describe'=>'人品很好','time'=>'2016-01-23')
+,'2'=>array('name'=>'项梁','url'=>'http://www.job.com/tiny/index.php?c=show&id=241','sex'=>'男','exp'=>'2年以上','job'=>'保安','mobile'=>'13485456516','describe'=>'骁勇善战，具备上阵杀','time'=>'2016-01-21')
+,'3'=>array('name'=>'贝克汉姆','url'=>'http://www.job.com/tiny/index.php?c=show&id=240','sex'=>'男','exp'=>'8年以上','job'=>'足球教练','mobile'=>'15158945123','describe'=>'多年来踢足球，在全球','time'=>'2016-01-20')
+,'4'=>array('name'=>'马冬梅','url'=>'http://www.job.com/tiny/index.php?c=show&id=239','sex'=>'女','exp'=>'应届毕业生','job'=>'服务员','mobile'=>'15963596554','describe'=>'务实,肯干,能吃苦','time'=>'2016-01-19')
+)
+; 
+?>
